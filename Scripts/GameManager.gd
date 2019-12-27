@@ -35,6 +35,7 @@ func respawn_player(player_id):
 	var location = get_randomized_spawn_positions().pop_back()
 	var playerInstance = player.instance()
 	playerInstance.position = location
+	playerInstance.playerId = player_id
 	current_scene.add_child(playerInstance)
 	
 		

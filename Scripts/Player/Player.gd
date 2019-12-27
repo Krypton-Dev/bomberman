@@ -54,7 +54,7 @@ func damage(player_id):
 	print("Damage by ", player_id)
 	
 	queue_free()
-	GameManager.respawn_player(player_id)
+	GameManager.respawn_player(self.playerId)
 	
 	var animation_instance = death_animation.instance()
 	animation_instance.position = position
