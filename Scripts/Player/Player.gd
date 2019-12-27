@@ -52,7 +52,7 @@ func fire():
 	get_parent().add_child(newBomb)
 	
 func damage(player_id):
-	if dead:
+	if dead or not spawned:
 		return
 		
 	dead = true
@@ -68,6 +68,9 @@ func damage(player_id):
 	
 
 func _physics_process(delta):
+	if not spawned:
+		return
+		
 	var dir = Vector2()
 	if Input.is_action_pressed(getInputAction("down")):
 		sprite.play("down")
