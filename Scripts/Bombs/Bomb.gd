@@ -41,5 +41,6 @@ func explodeIfSpace(rel_pos):
 	var explosionInstance = explosion.instance()
 	explosionInstance.position = new_pos
 	explosionInstance.player_id = player_id
+	explosionInstance.distance = rel_pos.length()
 	get_parent().add_child(explosionInstance)
 	return true

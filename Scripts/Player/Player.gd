@@ -50,7 +50,7 @@ func fire():
 	get_parent().add_child(newBomb)
 
 
-func damage(player_id):
+func damage(player_id, distance):
 	if dead or not spawned:
 		return
 		

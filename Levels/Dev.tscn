@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://Assets/tilesheet.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Map/tilesheet.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Player/PlayerScoreGUI.gd" type="Script" id=2]
 [ext_resource path="res://Assets/ScoreLabelFont.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Assets/Destoryables/BasicDestoryable.tscn" type="PackedScene" id=4]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
@@ -142,6 +143,10 @@ points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
 10/z_index = 0
 
 [node name="Node2D" type="Node2D"]
+__meta__ = {
+"_edit_horizontal_guides_": [ 128.0, 1280.0 ],
+"_edit_vertical_guides_": [ 130.0, 1280.0 ]
+}
 
 [node name="Map Background" type="TileMap" parent="."]
 z_index = -1
@@ -252,7 +257,6 @@ text = "0"
 align = 2
 
 [node name="RedScore" type="HSplitContainer" parent="CanvasLayer"]
-editor/display_folded = true
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 5.0
@@ -309,3 +313,44 @@ margin_bottom = 37.0
 custom_fonts/font = ExtResource( 3 )
 text = "0"
 align = 2
+
+[node name="BasicDestoryable" parent="." instance=ExtResource( 4 )]
+
+[node name="BasicDestoryable2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 448, 448 )
+
+[node name="BasicDestoryable3" parent="." instance=ExtResource( 4 )]
+position = Vector2( 576, 448 )
+
+[node name="BasicDestoryable4" parent="." instance=ExtResource( 4 )]
+position = Vector2( 704, 448 )
+
+[node name="BasicDestoryable5" parent="." instance=ExtResource( 4 )]
+position = Vector2( 704, 320 )
+
+[node name="BasicDestoryable6" parent="." instance=ExtResource( 4 )]
+position = Vector2( 704, 192 )
+
+[node name="BasicDestoryable7" parent="." instance=ExtResource( 4 )]
+position = Vector2( 576, 192 )
+
+[node name="BasicDestoryable8" parent="." instance=ExtResource( 4 )]
+position = Vector2( 448, 192 )
+
+[node name="BasicDestoryable9" parent="." instance=ExtResource( 4 )]
+position = Vector2( 320, 448 )
+
+[node name="BasicDestoryable13" parent="." instance=ExtResource( 4 )]
+position = Vector2( 192, 448 )
+
+[node name="BasicDestoryable14" parent="." instance=ExtResource( 4 )]
+position = Vector2( 192, 576 )
+
+[node name="BasicDestoryable10" parent="." instance=ExtResource( 4 )]
+position = Vector2( 448, 576 )
+
+[node name="BasicDestoryable11" parent="." instance=ExtResource( 4 )]
+position = Vector2( 704, 576 )
+
+[node name="BasicDestoryable12" parent="." instance=ExtResource( 4 )]
+position = Vector2( 832, 448 )
