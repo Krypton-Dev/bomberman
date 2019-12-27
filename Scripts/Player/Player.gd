@@ -9,17 +9,39 @@ onready var sprite = $AnimatedSprite
 # var b = "text"
 export var speed = 250
 export var playerId = 1
+export var spawn_delay = 1.5
+export var spawn_safe_time = 3
+var spawned = false
+var in_safe_mode = true
+var spawn_safe_time_elapsed = 0
+var spawn_delay_elapsed = 0
+
 var bomb = preload("res://Scripts/Bombs/Bomb.tscn")
+var death_animation = preload("res://Assets/Player/death_animation.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	sprite.frames = load("res://Assets/Player/" + getColor() + "/Animation.tres")
+	visible = false
+	sprite.frames = load("res://Assets/Player/" + GameManager.getColor(playerId) + "/Animation.tres")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):	
+	spawn_delay_elapsed += delta
+	if not spawned and spawn_delay_elapsed >= spawn_delay:
+		spawned = true
+		visible = true
+	
+	if not spawned:
+		return		
+
 	if Input.is_action_just_pressed(getInputAction("fire")):
 		print("fire")
 		fire()
+		
+	if not in_safe_mode:
+		spawn_safe_time_elapsed += delta
+		if spawn_safe_time_elapsed >= spawn_safe_time:
+			in_safe_mode = false
 
 
 func fire():
@@ -30,6 +52,15 @@ func fire():
 	
 func damage(player_id):
 	print("Damage by ", player_id)
+	
+	queue_free()
+	GameManager.respawn_player(player_id)
+	
+	var animation_instance = death_animation.instance()
+	animation_instance.position = position
+	self.get_parent().add_child(animation_instance)
+	
+	
 
 func _physics_process(delta):
 	var dir = Vector2()
@@ -55,14 +86,3 @@ func _physics_process(delta):
 func getInputAction(action):
 	return "player" + str(playerId) + "_" + action
 	
-func getColor():
-	if playerId == 1:
-		return "Green"
-	if playerId == 2:
-		return "Red"
-	if playerId == 3:
-		return "Blue"
-	if playerId == 4:
-		return "Purple"
-		
-	return "Green"

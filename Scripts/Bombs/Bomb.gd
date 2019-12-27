@@ -1,5 +1,5 @@
 extends Node2D
-export var lifetime = 5
+export var lifetime = 2
 var elapsed = 0
 var explosion = preload("res://Scripts/Bombs/Explosion.tscn")
 var explosion_range = 3

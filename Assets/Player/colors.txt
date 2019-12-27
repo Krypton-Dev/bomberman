@@ -1,0 +1,13 @@
+blue:
+hue: 189
+saturation: 48
+
+
+red:
+hue: 0
+saturation: 48
+
+
+purple:
+hue: 287
+saturation: 48
