@@ -13,7 +13,7 @@ var bomb = preload("res://Scripts/Bombs/Bomb.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	sprite.frames = load("res://Assets/Player/" + getColor() + "/Animation.tres")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):	
@@ -54,3 +54,15 @@ func _physics_process(delta):
 	
 func getInputAction(action):
 	return "player" + str(playerId) + "_" + action
+	
+func getColor():
+	if playerId == 1:
+		return "Green"
+	if playerId == 2:
+		return "Red"
+	if playerId == 3:
+		return "Blue"
+	if playerId == 4:
+		return "Purple"
+		
+	return "Green"

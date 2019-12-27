@@ -24,6 +24,10 @@ config/name="Bomberman"
 run/main_scene="res://Levels/Dev.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+GameManager="*res://Scripts/GameManager.gd"
+
 [display]
 
 window/stretch/mode="2d"

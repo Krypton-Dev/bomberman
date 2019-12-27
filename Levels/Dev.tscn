@@ -1,7 +1,6 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/tilesheet.png" type="Texture" id=1]
-[ext_resource path="res://Scripts/Player/PlayerScene.tscn" type="PackedScene" id=2]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
@@ -156,15 +155,6 @@ tile_set = SubResource( 5 )
 cell_size = Vector2( 128, 128 )
 format = 1
 tile_data = PoolIntArray( 0, 9, 0, 1, 9, 0, 2, 9, 0, 3, 9, 0, 4, 9, 0, 5, 9, 0, 6, 9, 0, 7, 9, 0, 8, 9, 0, 9, 9, 0, 10, 9, 0, 65536, 9, 0, 65546, 9, 0, 131072, 9, 0, 131074, 9, 0, 131076, 9, 0, 131078, 9, 0, 131080, 9, 0, 131082, 9, 0, 196608, 9, 0, 196618, 9, 0, 262144, 9, 0, 262146, 9, 0, 262148, 9, 0, 262150, 9, 0, 262152, 9, 0, 262154, 9, 0, 327680, 9, 0, 327690, 9, 0, 393216, 9, 0, 393218, 9, 0, 393220, 9, 0, 393222, 9, 0, 393224, 9, 0, 393226, 9, 0, 458752, 9, 0, 458762, 9, 0, 524288, 9, 0, 524290, 9, 0, 524292, 9, 0, 524294, 9, 0, 524296, 9, 0, 524298, 9, 0, 589824, 9, 0, 589834, 9, 0, 655360, 9, 0, 655361, 9, 0, 655362, 9, 0, 655363, 9, 0, 655364, 9, 0, 655365, 9, 0, 655366, 9, 0, 655367, 9, 0, 655368, 9, 0, 655369, 9, 0, 655370, 9, 0 )
-
-[node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 202.275, 196.438 )
-z_index = 100
-
-[node name="Player2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1224.98, 193.983 )
-z_index = 100
-playerId = 2
 
 [node name="spawn_positions" type="Node2D" parent="."]
 editor/display_folded = true
