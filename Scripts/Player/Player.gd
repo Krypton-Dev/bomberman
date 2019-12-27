@@ -15,6 +15,7 @@ var spawned = false
 var in_safe_mode = true
 var spawn_safe_time_elapsed = 0
 var spawn_delay_elapsed = 0
+var dead = false
 
 var bomb = preload("res://Scripts/Bombs/Bomb.tscn")
 var death_animation = preload("res://Assets/Player/death_animation.tscn")
@@ -51,6 +52,10 @@ func fire():
 	get_parent().add_child(newBomb)
 	
 func damage(player_id):
+	if dead:
+		return
+		
+	dead = true
 	print("Damage by ", player_id)
 	
 	queue_free()
