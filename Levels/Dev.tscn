@@ -1,6 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Assets/tilesheet.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Player/PlayerScoreGUI.gd" type="Script" id=2]
+[ext_resource path="res://Assets/ScoreLabelFont.tres" type="DynamicFont" id=3]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
@@ -190,3 +192,114 @@ __meta__ = {
 position = Vector2( 704, 704 )
 current = true
 zoom = Vector2( 2.4, 2.4 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GreenScore" type="HSplitContainer" parent="CanvasLayer"]
+editor/display_folded = true
+margin_left = 5.0
+margin_right = 140.0
+margin_bottom = 51.0
+dragger_visibility = 2
+script = ExtResource( 2 )
+player_index = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/GreenScore"]
+margin_top = 13.0
+margin_right = 80.0
+margin_bottom = 37.0
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.0313726, 1, 0, 1 )
+custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+text = "Green"
+
+[node name="Score" type="Label" parent="CanvasLayer/GreenScore"]
+margin_left = 80.0
+margin_top = 13.0
+margin_right = 135.0
+margin_bottom = 37.0
+custom_fonts/font = ExtResource( 3 )
+text = "0"
+align = 2
+
+[node name="BlueScore" type="HSplitContainer" parent="CanvasLayer"]
+editor/display_folded = true
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -135.0
+margin_bottom = 40.0
+split_offset = 5
+dragger_visibility = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/BlueScore"]
+margin_top = 8.0
+margin_right = 85.0
+margin_bottom = 32.0
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0, 0.392157, 1, 1 )
+custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+text = "Green"
+
+[node name="Score" type="Label" parent="CanvasLayer/BlueScore"]
+margin_left = 85.0
+margin_top = 8.0
+margin_right = 135.0
+margin_bottom = 32.0
+custom_fonts/font = ExtResource( 3 )
+text = "0"
+align = 2
+
+[node name="RedScore" type="HSplitContainer" parent="CanvasLayer"]
+editor/display_folded = true
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = -51.0
+margin_right = 135.0
+dragger_visibility = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/RedScore"]
+margin_top = 13.0
+margin_right = 48.0
+margin_bottom = 37.0
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+text = "Red"
+
+[node name="Score" type="Label" parent="CanvasLayer/RedScore"]
+margin_left = 48.0
+margin_top = 13.0
+margin_right = 130.0
+margin_bottom = 37.0
+custom_fonts/font = ExtResource( 3 )
+text = "0"
+align = 2
+
+[node name="PurpleScore" type="HSplitContainer" parent="CanvasLayer"]
+editor/display_folded = true
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -135.0
+margin_top = -51.0
+dragger_visibility = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PurpleScore"]
+margin_top = 13.0
+margin_right = 96.0
+margin_bottom = 37.0
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 1, 0, 0.890196, 1 )
+custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+text = "Purple"
+
+[node name="Score" type="Label" parent="CanvasLayer/PurpleScore"]
+margin_left = 96.0
+margin_top = 13.0
+margin_right = 135.0
+margin_bottom = 37.0
+custom_fonts/font = ExtResource( 3 )
+text = "0"
+align = 2

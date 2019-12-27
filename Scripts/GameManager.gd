@@ -4,6 +4,9 @@ var player = preload("res://Scripts/Player/PlayerScene.tscn")
 var current_scene = null
 var respawn_time = 2
 
+var player_scores = [ 0, 0, 0, 0 ]
+
+signal player_score_updated
 
 func _ready():
 	print("Start game")
@@ -12,8 +15,8 @@ func _ready():
 	current_scene = root.get_child(root.get_child_count() - 1)
 	
 	spawn_players()
-	
-	
+
+
 func get_randomized_spawn_positions():
 	# Query spawn locations
 	var locations = []
@@ -22,7 +25,7 @@ func get_randomized_spawn_positions():
 	randomize()
 	locations.shuffle()
 	return locations
-	
+
 func spawn_players():		
 	var locations = get_randomized_spawn_positions()
 	for player_id in range(1, 5):
@@ -37,8 +40,20 @@ func respawn_player(player_id):
 	playerInstance.position = location
 	playerInstance.playerId = player_id
 	current_scene.add_child(playerInstance)
-	
+
+func grant_score(player_id, score = 1):
+	print("grant score for ", player_id)
+	player_scores[player_id-1] = player_scores[player_id-1] + score
+	if player_scores[player_id-1] < 0:
+		player_scores[player_id-1] = 0 # We don't allow negative score values!
+	emit_signal("player_score_updated")
+
+func get_score(player_id):
+	if player_id < 1 or player_id > 4:
+		return -1
 		
+	return player_scores[player_id-1]
+
 func getColor(playerId):
 	if playerId == 1:
 		return "Green"

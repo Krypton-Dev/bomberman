@@ -1,12 +1,9 @@
 extends KinematicBody2D
 
-# Declare member variables here. Examples:
 class_name Player
 
 onready var sprite = $AnimatedSprite
 
-# var a = 2
-# var b = "text"
 export var speed = 250
 export var playerId = 1
 export var spawn_delay = 1.5
@@ -16,16 +13,17 @@ var in_safe_mode = true
 var spawn_safe_time_elapsed = 0
 var spawn_delay_elapsed = 0
 var dead = false
+var gm = null
 
 var bomb = preload("res://Scripts/Bombs/Bomb.tscn")
 var death_animation = preload("res://Assets/Player/death_animation.tscn")
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	visible = false
 	sprite.frames = load("res://Assets/Player/" + GameManager.getColor(playerId) + "/Animation.tres")
+	
+	gm = get_node("/root/GameManager")
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):	
 	spawn_delay_elapsed += delta
 	if not spawned and spawn_delay_elapsed >= spawn_delay:
@@ -50,13 +48,17 @@ func fire():
 	newBomb.player_id = playerId
 	newBomb.position = (position / 128).floor() * 128 + Vector2(64,64)
 	get_parent().add_child(newBomb)
-	
+
+
 func damage(player_id):
 	if dead or not spawned:
 		return
 		
 	dead = true
-	print("Damage by ", player_id)
+	if player_id != self.playerId:
+		gm.grant_score(player_id)
+	else:
+		gm.grant_score(player_id, -1)
 	
 	queue_free()
 	GameManager.respawn_player(self.playerId)
@@ -64,8 +66,6 @@ func damage(player_id):
 	var animation_instance = death_animation.instance()
 	animation_instance.position = position
 	self.get_parent().add_child(animation_instance)
-	
-	
 
 func _physics_process(delta):
 	if not spawned:
@@ -89,8 +89,7 @@ func _physics_process(delta):
 		sprite.play("default")
 		
 	move_and_slide(dir * speed)
-	
-	
+
+
 func getInputAction(action):
 	return "player" + str(playerId) + "_" + action
-	
