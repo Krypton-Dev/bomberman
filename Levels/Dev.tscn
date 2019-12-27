@@ -230,6 +230,8 @@ margin_left = -135.0
 margin_bottom = 40.0
 split_offset = 5
 dragger_visibility = 2
+script = ExtResource( 2 )
+player_index = 3
 
 [node name="Label" type="Label" parent="CanvasLayer/BlueScore"]
 margin_top = 8.0
@@ -257,6 +259,8 @@ margin_left = 5.0
 margin_top = -51.0
 margin_right = 135.0
 dragger_visibility = 2
+script = ExtResource( 2 )
+player_index = 2
 
 [node name="Label" type="Label" parent="CanvasLayer/RedScore"]
 margin_top = 13.0
@@ -285,6 +289,8 @@ anchor_bottom = 1.0
 margin_left = -135.0
 margin_top = -51.0
 dragger_visibility = 2
+script = ExtResource( 2 )
+player_index = 4
 
 [node name="Label" type="Label" parent="CanvasLayer/PurpleScore"]
 margin_top = 13.0
