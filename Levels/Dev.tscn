@@ -199,6 +199,7 @@ current = true
 zoom = Vector2( 2.4, 2.4 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+editor/display_folded = true
 
 [node name="GreenScore" type="HSplitContainer" parent="CanvasLayer"]
 editor/display_folded = true
@@ -351,6 +352,120 @@ position = Vector2( 448, 576 )
 
 [node name="BasicDestoryable11" parent="." instance=ExtResource( 4 )]
 position = Vector2( 704, 576 )
+
+[node name="BasicDestoryable16" parent="." instance=ExtResource( 4 )]
+position = Vector2( 576, 704 )
+
+[node name="BasicDestoryable17" parent="." instance=ExtResource( 4 )]
+position = Vector2( 448, 704 )
+
+[node name="BasicDestoryable18" parent="." instance=ExtResource( 4 )]
+position = Vector2( 320, 704 )
+
+[node name="BasicDestoryable19" parent="." instance=ExtResource( 4 )]
+position = Vector2( 192, 704 )
+
+[node name="BasicDestoryable20" parent="." instance=ExtResource( 4 )]
+position = Vector2( 192, 832 )
+
+[node name="BasicDestoryable21" parent="." instance=ExtResource( 4 )]
+position = Vector2( 192, 960 )
+
+[node name="BasicDestoryable22" parent="." instance=ExtResource( 4 )]
+position = Vector2( 320, 960 )
+
+[node name="BasicDestoryable23" parent="." instance=ExtResource( 4 )]
+position = Vector2( 448, 960 )
+
+[node name="BasicDestoryable24" parent="." instance=ExtResource( 4 )]
+position = Vector2( 448, 832 )
+
+[node name="BasicDestoryable25" parent="." instance=ExtResource( 4 )]
+position = Vector2( 576, 960 )
+
+[node name="BasicDestoryable26" parent="." instance=ExtResource( 4 )]
+position = Vector2( 704, 960 )
+
+[node name="BasicDestoryable27" parent="." instance=ExtResource( 4 )]
+position = Vector2( 704, 832 )
+
+[node name="BasicDestoryable28" parent="." instance=ExtResource( 4 )]
+position = Vector2( 832, 704 )
+
+[node name="BasicDestoryable29" parent="." instance=ExtResource( 4 )]
+position = Vector2( 960, 832 )
+
+[node name="BasicDestoryable42" parent="." instance=ExtResource( 4 )]
+position = Vector2( 1216, 960 )
+
+[node name="BasicDestoryable43" parent="." instance=ExtResource( 4 )]
+position = Vector2( 832, 960 )
+
+[node name="BasicDestoryable44" parent="." instance=ExtResource( 4 )]
+position = Vector2( 960, 1088 )
+
+[node name="BasicDestoryable47" parent="." instance=ExtResource( 4 )]
+position = Vector2( 960, 1216 )
+
+[node name="BasicDestoryable48" parent="." instance=ExtResource( 4 )]
+position = Vector2( 832, 1216 )
+
+[node name="BasicDestoryable49" parent="." instance=ExtResource( 4 )]
+position = Vector2( 704, 1216 )
+
+[node name="BasicDestoryable50" parent="." instance=ExtResource( 4 )]
+position = Vector2( 704, 1088 )
+
+[node name="BasicDestoryable51" parent="." instance=ExtResource( 4 )]
+position = Vector2( 576, 1216 )
+
+[node name="BasicDestoryable52" parent="." instance=ExtResource( 4 )]
+position = Vector2( 448, 1088 )
+
+[node name="BasicDestoryable53" parent="." instance=ExtResource( 4 )]
+position = Vector2( 448, 1216 )
+
+[node name="BasicDestoryable45" parent="." instance=ExtResource( 4 )]
+position = Vector2( 1088, 960 )
+
+[node name="BasicDestoryable46" parent="." instance=ExtResource( 4 )]
+position = Vector2( 960, 960 )
+
+[node name="BasicDestoryable30" parent="." instance=ExtResource( 4 )]
+position = Vector2( 960, 576 )
+
+[node name="BasicDestoryable31" parent="." instance=ExtResource( 4 )]
+position = Vector2( 960, 448 )
+
+[node name="BasicDestoryable32" parent="." instance=ExtResource( 4 )]
+position = Vector2( 960, 192 )
+
+[node name="BasicDestoryable36" parent="." instance=ExtResource( 4 )]
+position = Vector2( 1088, 448 )
+
+[node name="BasicDestoryable33" parent="." instance=ExtResource( 4 )]
+position = Vector2( 832, 192 )
+
+[node name="BasicDestoryable34" parent="." instance=ExtResource( 4 )]
+position = Vector2( 960, 320 )
+
+[node name="BasicDestoryable35" parent="." instance=ExtResource( 4 )]
+position = Vector2( 1216, 448 )
+
+[node name="BasicDestoryable37" parent="." instance=ExtResource( 4 )]
+position = Vector2( 1216, 576 )
+
+[node name="BasicDestoryable38" parent="." instance=ExtResource( 4 )]
+position = Vector2( 1216, 704 )
+
+[node name="BasicDestoryable39" parent="." instance=ExtResource( 4 )]
+position = Vector2( 960, 704 )
+
+[node name="BasicDestoryable41" parent="." instance=ExtResource( 4 )]
+position = Vector2( 1088, 704 )
+
+[node name="BasicDestoryable40" parent="." instance=ExtResource( 4 )]
+position = Vector2( 1216, 832 )
 
 [node name="BasicDestoryable12" parent="." instance=ExtResource( 4 )]
 position = Vector2( 832, 448 )
