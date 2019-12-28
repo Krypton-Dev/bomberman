@@ -37,6 +37,7 @@ func on_item_collect(body):
 	var item = get_enum_string(item_type)
 	if item_type == ItemType.RANDOM:
 		item = "bomb" # TODO: Implement
-	
-	gm.give_item(body.player_id, item)
-	queue_free()
+		
+	if gm.check_free_space(body.player_id, item):
+		gm.give_item(body.player_id, item)
+		queue_free()

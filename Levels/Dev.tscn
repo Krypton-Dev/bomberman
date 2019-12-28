@@ -168,7 +168,6 @@ margin_right = -5.0
 margin_bottom = -5.0
 
 [node name="Green (1)" type="VBoxContainer" parent="UI/MarginContainer"]
-editor/display_folded = true
 margin_right = 140.0
 margin_bottom = 60.0
 
@@ -533,6 +532,7 @@ __meta__ = {
 }
 
 [node name="Destoryabales" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="BasicDestoryable" parent="Destoryabales" instance=ExtResource( 7 )]
 
