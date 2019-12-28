@@ -89,8 +89,9 @@ player2_fire={
 [layer_names]
 
 2d_physics/layer_1="Walls"
-2d_physics/layer_2="Players"
+2d_physics/layer_2="Players & Pickups"
 2d_physics/layer_3="Destructables"
+2d_physics/layer_4="Explosions"
 
 [rendering]
 

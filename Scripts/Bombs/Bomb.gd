@@ -52,12 +52,24 @@ func spawnExplosion(abs_pos):
 	
 func explodeIfSpace(rel_pos):
 	var new_pos = position + rel_pos * grid_size
+	# check for static walls
 	var collisionLayerBorders = 1	
 	if gm.check_for_collision(collisionLayerBorders, new_pos):
-		return false
-	if gm.check_for_collision(4, new_pos):
-		print("explosion collision w/ block @", new_pos)
-		spawnExplosion(new_pos)
-		return false
+		return false # stop spreading
+		
 	spawnExplosion(new_pos)
+		
+	# check for pickable items
+	var collisionLayerItems = 2	
+	var items = gm.get_collisions(collisionLayerItems, new_pos, true, false, 5)
+	if not items.empty():
+		for item in items:
+			item["collider"].queue_free()
+		return true # continiue spreading
+	
+	# check for destroyables
+	if gm.check_for_collision(4, new_pos):
+		print("explosion collision w/ block @", new_pos)		
+		return false # stop spreading
+	
 	return true

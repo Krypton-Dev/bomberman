@@ -182,6 +182,9 @@ func on_destoryable_destroyed(destroyable, player_id):
 			#give_item(player_id, item_type)
 			spawn_item(destroyable.position, item_type)
 			
-func check_for_collision(layer, abs_pos, areas = false):	
-	var collisions = current_scene.get_world_2d().direct_space_state.intersect_point(abs_pos, 1, [], layer, true, areas)
+func get_collisions(layer, abs_pos, areas = false, bodies = true, count = 1):	
+	return current_scene.get_world_2d().direct_space_state.intersect_point(abs_pos, count, [], layer, bodies, areas)
+			
+func check_for_collision(layer, abs_pos, areas = false, bodies = true):	
+	var collisions = get_collisions(layer, abs_pos, areas, bodies)
 	return len(collisions) > 0
