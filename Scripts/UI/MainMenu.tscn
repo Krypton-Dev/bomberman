@@ -1,0 +1,73 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/UI/UITheme.tres" type="Theme" id=1]
+[ext_resource path="res://Scripts/UI/MainMenu.gd" type="Script" id=2]
+[ext_resource path="res://Assets/logo.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Kenney Bold.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+use_mipmaps = true
+use_filter = true
+extra_spacing_bottom = -7
+font_data = ExtResource( 4 )
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.773804
+margin_right = -0.773804
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -185.0
+margin_top = -135.0
+margin_right = 185.0
+margin_bottom = 135.0
+custom_constants/separation = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 398.0
+margin_bottom = 78.0
+custom_constants/separation = 32
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
+margin_right = 78.0
+margin_bottom = 78.0
+rect_min_size = Vector2( 78, 78 )
+texture = ExtResource( 3 )
+expand = true
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_left = 110.0
+margin_top = 18.0
+margin_right = 398.0
+margin_bottom = 59.0
+custom_fonts/font = SubResource( 1 )
+text = "Bomberman"
+
+[node name="Local Multiplayer" type="Button" parent="VBoxContainer"]
+margin_top = 98.0
+margin_right = 398.0
+margin_bottom = 142.0
+text = "Local Multiplayer"
+
+[node name="Network Multiplayer" type="Button" parent="VBoxContainer"]
+margin_top = 162.0
+margin_right = 398.0
+margin_bottom = 206.0
+text = "Network Multiplayer"
+
+[node name="Exit" type="Button" parent="VBoxContainer"]
+margin_top = 226.0
+margin_right = 398.0
+margin_bottom = 270.0
+text = "Quit Game"
+[connection signal="pressed" from="VBoxContainer/Local Multiplayer" to="." method="_on_local_pressed"]
+[connection signal="pressed" from="VBoxContainer/Network Multiplayer" to="." method="_on_network_pressed"]
+[connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_exit_pressed"]

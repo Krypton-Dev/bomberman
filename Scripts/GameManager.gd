@@ -1,5 +1,7 @@
 extends Node
 
+var game_running = false
+
 var player = preload("res://Scripts/Player/PlayerScene.tscn")
 var item = preload("res://Scripts/Items/Item.tscn")
 var current_scene = null
@@ -24,6 +26,19 @@ func _ready():
 	print("Start game")
 	randomize()
 	
+	clear_inventories()
+
+func _process(delta):
+	if not game_running:
+		return
+	
+	next_item_drop -= delta
+	if next_item_drop <= 0:
+		spawn_random_item()
+		
+func start_game():
+	game_running = true
+	
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() - 1)
 	
@@ -31,11 +46,7 @@ func _ready():
 	spawn_players()	
 	
 	spawn_random_item()
-
-func _process(delta):
-	next_item_drop -= delta
-	if next_item_drop <= 0:
-		spawn_random_item()
+		
 ###################################
 ############## SPAWN ##############
 ###################################

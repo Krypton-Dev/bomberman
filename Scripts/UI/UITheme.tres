@@ -1,0 +1,53 @@
+[gd_resource type="Theme" load_steps=8 format=2]
+
+[ext_resource path="res://Assets/UI/blue_button00.png" type="Texture" id=1]
+[ext_resource path="res://Assets/UI/blue_button01.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Kenney Bold.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="StyleBoxTexture" id=1]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 190, 49 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+modulate_color = Color( 0.768627, 0.768627, 0.768627, 1 )
+
+[sub_resource type="StyleBoxTexture" id=2]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 190, 49 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id=3]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 190, 45 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+
+[sub_resource type="DynamicFont" id=4]
+font_data = ExtResource( 3 )
+
+[resource]
+default_font = SubResource( 4 )
+Button/colors/font_color = Color( 1, 1, 1, 1 )
+Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+Button/colors/font_color_hover = Color( 1, 1, 1, 1 )
+Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+Button/constants/hseparation = 2
+Button/fonts/font = null
+Button/styles/disabled = null
+Button/styles/focus = null
+Button/styles/hover = SubResource( 1 )
+Button/styles/normal = SubResource( 2 )
+Button/styles/pressed = SubResource( 3 )
