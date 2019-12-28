@@ -21,7 +21,16 @@ func _ready():
 	var path = "res://Assets/Items/item_" + get_enum_string(item_type) + ".png"
 	sprite.texture = load(path)
 	
+func get_enum_by_string (type: String):
+	if type.to_lower() == "random":
+		return ItemType.RANDOM
+	if type.to_lower() == "bomb":
+		return ItemType.BOMB
+		
+	assert(false)
 
+func set_item_type (type: String):
+	self.item_type = get_enum_by_string(type)
 
 func on_item_collect(body):
 	var gm = get_node("/root/GameManager")

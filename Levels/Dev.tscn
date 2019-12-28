@@ -174,7 +174,7 @@ margin_bottom = 60.0
 
 [node name="Score" type="HBoxContainer" parent="UI/MarginContainer/Green (1)"]
 editor/display_folded = true
-margin_right = 524.0
+margin_right = 140.0
 margin_bottom = 24.0
 script = ExtResource( 1 )
 player_index = 1
@@ -198,7 +198,7 @@ align = 2
 [node name="Bombs" type="HBoxContainer" parent="UI/MarginContainer/Green (1)"]
 editor/display_folded = true
 margin_top = 28.0
-margin_right = 524.0
+margin_right = 140.0
 margin_bottom = 60.0
 script = ExtResource( 3 )
 empty_icon = ExtResource( 4 )
@@ -533,7 +533,6 @@ __meta__ = {
 }
 
 [node name="Destoryabales" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="BasicDestoryable" parent="Destoryabales" instance=ExtResource( 7 )]
 

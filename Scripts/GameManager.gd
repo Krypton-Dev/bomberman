@@ -1,6 +1,7 @@
 extends Node
 
 var player = preload("res://Scripts/Player/PlayerScene.tscn")
+var item = preload("res://Scripts/Items/Item.tscn")
 var current_scene = null
 var respawn_time = 2
 
@@ -8,6 +9,11 @@ var player_scores = [ 0, 0, 0, 0 ]
 var player_inventories = [
 	null, null, null, null
 ]
+var propabilities = {
+	0: {
+		bomb=0.333
+	}
+}
 
 signal player_score_updated
 signal player_inventory_updated
@@ -49,7 +55,13 @@ func respawn_player(player_id):
 	playerInstance.player_id = player_id
 	current_scene.add_child(playerInstance)
 	clear_inventory(player_id)
-		
+
+func spawn_item(position:Vector2, item_type:String):
+	var item_instance = item.instance()
+	item_instance.position = position
+	item_instance.set_item_type(item_type)
+	current_scene.add_child(item_instance)
+
 #######################################
 ############## INVENTORY ##############
 #######################################
@@ -128,3 +140,15 @@ func getColor(player_id):
 		return "Purple"
 		
 	return "Green"
+
+
+	
+func on_destoryable_destroyed(destroyable, player_id):
+	if not propabilities.has(destroyable.type):
+		return
+	var props = propabilities[destroyable.type]
+	
+	for item_type in props.keys():
+		if randf() <= props[item_type]:
+			#give_item(player_id, item_type)
+			spawn_item(destroyable.position, item_type)

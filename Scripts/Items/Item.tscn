@@ -3,7 +3,7 @@
 [ext_resource path="res://Scripts/Items/Item.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Items/item_random.png" type="Texture" id=2]
 
-[sub_resource type="RectangleShape2D" id=7]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 32 )
 
 [node name="Item" type="Area2D"]
@@ -14,7 +14,7 @@ script = ExtResource( 1 )
 item_type = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 7 )
+shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
