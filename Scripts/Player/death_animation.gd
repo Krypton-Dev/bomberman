@@ -2,8 +2,9 @@ extends Sprite
 var time_visible = 1
 var time_elapsed = 0
 var blink_time = 0.2
-var player_id = null
+var player_id = -1
 var dead_texture = null
+
 func _ready():
 	var texturePath = "res://Assets/Player/" + GameManager.getColor(player_id) + "/dead.png"
 	self.texture = load(texturePath)

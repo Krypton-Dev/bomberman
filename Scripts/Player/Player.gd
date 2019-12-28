@@ -5,7 +5,7 @@ class_name Player
 onready var sprite = $AnimatedSprite
 
 export var speed = 250
-export var playerId = 1
+export var player_id = 1
 export var spawn_delay = 1.5
 export var spawn_safe_time = 3
 var spawned = false
@@ -16,16 +16,14 @@ var dead = false
 var gm = null
 
 var bomb = preload("res://Scripts/Bombs/Bomb.tscn")
-var death_animation = preload("res://Assets/Player/death_animation.tscn")
+var death_animation = preload("res://Scripts/Player/death_animation.tscn")
 
 func _ready():
 	visible = false
-	sprite.frames = load("res://Assets/Player/" + GameManager.getColor(playerId) + "/Animation.tres")
+	sprite.frames = load("res://Assets/Player/" + GameManager.getColor(player_id) + "/Animation.tres")
 	
 	gm = get_node("/root/GameManager")
 	
-	
-
 func _process(delta):	
 	spawn_delay_elapsed += delta
 	if not spawned and spawn_delay_elapsed >= spawn_delay:
@@ -46,10 +44,13 @@ func _process(delta):
 
 
 func fire():
-	var newBomb = bomb.instance()
-	newBomb.player_id = playerId
-	newBomb.position = (position / 128).floor() * 128 + Vector2(64,64)
-	get_parent().add_child(newBomb)
+	if gm.has_item(player_id, "bomb"):
+		var newBomb = bomb.instance()
+		newBomb.player_id = player_id
+		newBomb.position = (position / 128).floor() * 128 + Vector2(64,64)
+		get_parent().add_child(newBomb)
+		
+		gm.remove_item(player_id, "bomb")
 
 
 func damage(player_id):
@@ -57,15 +58,16 @@ func damage(player_id):
 		return
 		
 	dead = true
-	if player_id != self.playerId:
+	if player_id != self.player_id:
 		gm.grant_score(player_id)
 	else:
 		gm.grant_score(player_id, -1)
 	
 	queue_free()
-	GameManager.respawn_player(self.playerId)
+	GameManager.respawn_player(self.player_id)
 	
 	var animation_instance = death_animation.instance()
+	animation_instance.player_id = self.player_id
 	animation_instance.position = position
 	self.get_parent().add_child(animation_instance)
 
@@ -94,4 +96,4 @@ func _physics_process(delta):
 
 
 func getInputAction(action):
-	return "player" + str(playerId) + "_" + action
+	return "player" + str(player_id) + "_" + action

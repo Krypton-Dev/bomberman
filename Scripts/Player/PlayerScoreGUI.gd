@@ -1,4 +1,4 @@
-extends HSplitContainer
+extends HBoxContainer
 
 export var player_index = 0
 

@@ -5,8 +5,12 @@ var current_scene = null
 var respawn_time = 2
 
 var player_scores = [ 0, 0, 0, 0 ]
+var player_inventories = [
+	null, null, null, null
+]
 
 signal player_score_updated
+signal player_inventory_updated
 
 func _ready():
 	print("Start game")
@@ -14,8 +18,12 @@ func _ready():
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() - 1)
 	
-	spawn_players()
+	clear_inventories()
+	spawn_players()	
 
+###################################
+############## SPAWN ##############
+###################################
 
 func get_randomized_spawn_positions():
 	# Query spawn locations
@@ -31,37 +39,92 @@ func spawn_players():
 	for player_id in range(1, 5):
 		var playerInstance = player.instance()
 		playerInstance.position = locations.pop_back()
-		playerInstance.playerId = player_id
+		playerInstance.player_id = player_id
 		current_scene.add_child(playerInstance)
-
+		
 func respawn_player(player_id):
 	var location = get_randomized_spawn_positions().pop_back()
 	var playerInstance = player.instance()
 	playerInstance.position = location
-	playerInstance.playerId = player_id
+	playerInstance.player_id = player_id
 	current_scene.add_child(playerInstance)
+	clear_inventory(player_id)
+		
+#######################################
+############## INVENTORY ##############
+#######################################
+
+func clear_inventories():
+	for player_id in range(1, 5):
+		clear_inventory(player_id)
+	
+func clear_inventory(player_id):
+	player_inventories[player_id-1] = {
+		bomb = 3
+	}
+	
+	emit_signal("player_inventory_updated", player_id)
+	
+func get_inventory(player_id):
+	return player_inventories[player_id-1]
+	
+func check_free_space(player_id, item):
+	assert(player_id >= 1 && player_id <= 4)
+	var quantity = player_inventories[player_id-1][item] + 1
+	
+	return _ensure_storage(item, quantity) == quantity
+
+func give_item(player_id, item, quantity = 1):
+	assert(player_id >= 1 && player_id <= 4)
+	player_inventories[player_id-1][item] = _ensure_storage(item, player_inventories[player_id-1][item] + quantity)
+	
+	emit_signal("player_inventory_updated", player_id)
+	
+func remove_item(player_id, item, quantity = 1):
+	give_item(player_id, item, -quantity)
+	
+func _ensure_storage(item, count):
+	if item == "bomb":
+		return min(4, max(0, count))
+		
+	return count
+	
+func get_item_count(player_id, item):
+	assert(player_id >= 1 && player_id <= 4)
+	return player_inventories[player_id-1][item]
+	
+func has_item(player_id, item):
+	return get_item_count(player_id, item) > 0
+
+###################################
+############## SCORE ##############
+###################################
 
 func grant_score(player_id, score = 1):
 	print("grant score for ", player_id)
-	player_scores[player_id-1] = player_scores[player_id-1] + score
+	player_scores[player_id-1] += score
 	if player_scores[player_id-1] < 0:
 		player_scores[player_id-1] = 0 # We don't allow negative score values!
-	emit_signal("player_score_updated")
-
+	emit_signal("player_score_updated", player_id)
+	
 func get_score(player_id):
 	if player_id < 1 or player_id > 4:
 		return -1
 		
 	return player_scores[player_id-1]
 
-func getColor(playerId):
-	if playerId == 1:
+#####################################
+############## GENERAL ##############
+#####################################
+
+func getColor(player_id):
+	if player_id == 1:
 		return "Green"
-	if playerId == 2:
+	if player_id == 2:
 		return "Red"
-	if playerId == 3:
+	if player_id == 3:
 		return "Blue"
-	if playerId == 4:
+	if player_id == 4:
 		return "Purple"
 		
 	return "Green"
