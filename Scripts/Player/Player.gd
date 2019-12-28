@@ -23,6 +23,8 @@ func _ready():
 	sprite.frames = load("res://Assets/Player/" + GameManager.getColor(playerId) + "/Animation.tres")
 	
 	gm = get_node("/root/GameManager")
+	
+	
 
 func _process(delta):	
 	spawn_delay_elapsed += delta

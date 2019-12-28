@@ -1,15 +1,25 @@
 extends Node2D
-export var lifetime = 2
+
 var elapsed = 0
 var explosion = preload("res://Scripts/Bombs/Explosion.tscn")
 var explosion_range = 3
-export var grid_size = 128
-
 var player_id = -1
+onready var sprite = $AnimatedSprite
+
+export var grid_size = 128
+export var lifetime = 2
+
+func _ready():
+	sprite.playing = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	elapsed += delta
+	var progress = elapsed / lifetime
+	var animation_speed = pow(progress + 1, 3)
+	sprite.speed_scale = animation_speed
+	#var animation_speed = -pow(progress, 3) + 1
+	#modulate = Color(1,1,1, alpha)
 	if elapsed >= lifetime:
 		explode()
 

@@ -199,7 +199,6 @@ current = true
 zoom = Vector2( 2.4, 2.4 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-editor/display_folded = true
 
 [node name="GreenScore" type="HSplitContainer" parent="CanvasLayer"]
 editor/display_folded = true
