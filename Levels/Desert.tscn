@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/Player/PlayerScoreGUI.gd" type="Script" id=1]
 [ext_resource path="res://Assets/ScoreLabelFont.tres" type="DynamicFont" id=2]
@@ -6,8 +6,10 @@
 [ext_resource path="res://Assets/UI/bomb_empty.png" type="Texture" id=4]
 [ext_resource path="res://Assets/UI/bomb.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Map/tilesheet.png" type="Texture" id=6]
-[ext_resource path="res://Assets/Destoryables/BasicDestoryable.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Scripts/Items/Item.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Assets/Map/desert.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Map/water.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Map/oasis.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Destoryables/BasicDestoryable.tscn" type="PackedScene" id=10]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
@@ -145,6 +147,46 @@ points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 10/z_index = 0
+11/name = "desert.png 11"
+11/texture = ExtResource( 7 )
+11/tex_offset = Vector2( 0, 0 )
+11/modulate = Color( 1, 1, 1, 1 )
+11/region = Rect2( 0, 0, 128, 128 )
+11/tile_mode = 0
+11/occluder_offset = Vector2( 0, 0 )
+11/navigation_offset = Vector2( 0, 0 )
+11/shapes = [  ]
+11/z_index = 0
+12/name = "water.png 12"
+12/texture = ExtResource( 8 )
+12/tex_offset = Vector2( 0, 0 )
+12/modulate = Color( 1, 1, 1, 1 )
+12/region = Rect2( 0, 0, 128, 128 )
+12/tile_mode = 0
+12/occluder_offset = Vector2( 0, 0 )
+12/navigation_offset = Vector2( 0, 0 )
+12/shapes = [  ]
+12/z_index = 0
+13/name = "oasis.png 13"
+13/texture = ExtResource( 9 )
+13/tex_offset = Vector2( 0, 0 )
+13/modulate = Color( 1, 1, 1, 1 )
+13/region = Rect2( 0, 0, 512, 512 )
+13/tile_mode = 0
+13/occluder_offset = Vector2( 0, 0 )
+13/navigation_offset = Vector2( 0, 0 )
+13/shapes = [  ]
+13/z_index = 0
+14/name = "tilesheet.png 14"
+14/texture = ExtResource( 6 )
+14/tex_offset = Vector2( 0, 0 )
+14/modulate = Color( 1, 1, 1, 1 )
+14/region = Rect2( 0, 0, 128, 128 )
+14/tile_mode = 0
+14/occluder_offset = Vector2( 0, 0 )
+14/navigation_offset = Vector2( 0, 0 )
+14/shapes = [  ]
+14/z_index = 0
 
 [node name="Node2D" type="Node2D"]
 __meta__ = {
@@ -153,13 +195,14 @@ __meta__ = {
 }
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 704, 704 )
+position = Vector2( 896, 896 )
 current = true
-zoom = Vector2( 2.4, 2.4 )
+zoom = Vector2( 3, 3 )
 
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="MarginContainer" type="Control" parent="UI"]
+editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 5.0
@@ -493,16 +536,15 @@ cell_size = Vector2( 128, 128 )
 collision_layer = 0
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 0, 6, 0, 1, 6, 0, 2, 6, 0, 3, 6, 0, 4, 6, 0, 5, 6, 0, 6, 6, 0, 7, 6, 0, 8, 6, 0, 9, 6, 0, 10, 6, 0, 65536, 6, 0, 65537, 6, 0, 65538, 6, 0, 65539, 6, 0, 65540, 6, 0, 65541, 6, 0, 65542, 6, 0, 65543, 6, 0, 65544, 6, 0, 65545, 6, 0, 65546, 6, 0, 131072, 6, 0, 131073, 6, 0, 131074, 6, 0, 131075, 6, 0, 131076, 6, 0, 131077, 6, 0, 131078, 6, 0, 131079, 6, 0, 131080, 6, 0, 131081, 6, 0, 131082, 6, 0, 196608, 6, 0, 196609, 6, 0, 196610, 6, 0, 196611, 6, 0, 196612, 6, 0, 196613, 6, 0, 196614, 6, 0, 196615, 6, 0, 196616, 6, 0, 196617, 6, 0, 196618, 6, 0, 262144, 6, 0, 262145, 6, 0, 262146, 6, 0, 262147, 6, 0, 262148, 6, 0, 262149, 6, 0, 262150, 6, 0, 262151, 6, 0, 262152, 6, 0, 262153, 6, 0, 262154, 6, 0, 327680, 6, 0, 327681, 6, 0, 327682, 6, 0, 327683, 6, 0, 327684, 6, 0, 327685, 6, 0, 327686, 6, 0, 327687, 6, 0, 327688, 6, 0, 327689, 6, 0, 327690, 6, 0, 393216, 6, 0, 393217, 6, 0, 393218, 6, 0, 393219, 6, 0, 393220, 6, 0, 393221, 6, 0, 393222, 6, 0, 393223, 6, 0, 393224, 6, 0, 393225, 6, 0, 393226, 6, 0, 458752, 6, 0, 458753, 6, 0, 458754, 6, 0, 458755, 6, 0, 458756, 6, 0, 458757, 6, 0, 458758, 6, 0, 458759, 6, 0, 458760, 6, 0, 458761, 6, 0, 458762, 6, 0, 524288, 6, 0, 524289, 6, 0, 524290, 6, 0, 524291, 6, 0, 524292, 6, 0, 524293, 6, 0, 524294, 6, 0, 524295, 6, 0, 524296, 6, 0, 524297, 6, 0, 524298, 6, 0, 589824, 6, 0, 589825, 6, 0, 589826, 6, 0, 589827, 6, 0, 589828, 6, 0, 589829, 6, 0, 589830, 6, 0, 589831, 6, 0, 589832, 6, 0, 589833, 6, 0, 589834, 6, 0, 655360, 6, 0, 655361, 6, 0, 655362, 6, 0, 655363, 6, 0, 655364, 6, 0, 655365, 6, 0, 655366, 6, 0, 655367, 6, 0, 655368, 6, 0, 655369, 6, 0, 655370, 6, 0 )
+tile_data = PoolIntArray( 0, 11, 0, 1, 11, 0, 2, 11, 0, 3, 11, 0, 4, 11, 0, 5, 11, 0, 6, 11, 0, 7, 11, 0, 8, 11, 0, 9, 11, 0, 10, 11, 0, 11, 11, 0, 12, 11, 0, 13, 11, 0, 65536, 11, 0, 65537, 11, 0, 65538, 11, 0, 65539, 11, 0, 65540, 11, 0, 65541, 11, 0, 65542, 11, 0, 65543, 11, 0, 65544, 11, 0, 65545, 11, 0, 65546, 11, 0, 65547, 11, 0, 65548, 11, 0, 65549, 11, 0, 131072, 11, 0, 131073, 11, 0, 131074, 11, 0, 131075, 11, 0, 131076, 11, 0, 131077, 11, 0, 131078, 11, 0, 131079, 11, 0, 131080, 11, 0, 131081, 11, 0, 131082, 11, 0, 131083, 11, 0, 131084, 11, 0, 131085, 11, 0, 196608, 11, 0, 196609, 11, 0, 196610, 11, 0, 196611, 11, 0, 196612, 11, 0, 196613, 11, 0, 196614, 11, 0, 196615, 11, 0, 196616, 11, 0, 196617, 11, 0, 196618, 11, 0, 196619, 11, 0, 196620, 11, 0, 196621, 11, 0, 262144, 11, 0, 262145, 11, 0, 262146, 11, 0, 262147, 11, 0, 262148, 11, 0, 262149, 11, 0, 262150, 11, 0, 262151, 11, 0, 262152, 11, 0, 262153, 11, 0, 262154, 11, 0, 262155, 11, 0, 262156, 11, 0, 262157, 11, 0, 327680, 11, 0, 327681, 11, 0, 327682, 11, 0, 327683, 11, 0, 327684, 11, 0, 327685, 13, 0, 327689, 11, 0, 327690, 11, 0, 327691, 11, 0, 327692, 11, 0, 327693, 11, 0, 393216, 11, 0, 393217, 11, 0, 393218, 11, 0, 393219, 11, 0, 393220, 11, 0, 393225, 11, 0, 393226, 11, 0, 393227, 11, 0, 393228, 11, 0, 393229, 11, 0, 458752, 11, 0, 458753, 11, 0, 458754, 11, 0, 458755, 11, 0, 458756, 11, 0, 458761, 11, 0, 458762, 11, 0, 458763, 11, 0, 458764, 11, 0, 458765, 11, 0, 524288, 11, 0, 524289, 11, 0, 524290, 11, 0, 524291, 11, 0, 524292, 11, 0, 524296, 11, 0, 524297, 11, 0, 524298, 11, 0, 524299, 11, 0, 524300, 11, 0, 524301, 11, 0, 589824, 11, 0, 589825, 11, 0, 589826, 11, 0, 589827, 11, 0, 589828, 11, 0, 589829, 11, 0, 589830, 11, 0, 589831, 11, 0, 589832, 11, 0, 589833, 11, 0, 589834, 11, 0, 589835, 11, 0, 589836, 11, 0, 589837, 11, 0, 655360, 11, 0, 655361, 11, 0, 655362, 11, 0, 655363, 11, 0, 655364, 11, 0, 655365, 11, 0, 655366, 11, 0, 655367, 11, 0, 655368, 11, 0, 655369, 11, 0, 655370, 11, 0, 655371, 11, 0, 655372, 11, 0, 655373, 11, 0, 720896, 11, 0, 720897, 11, 0, 720898, 11, 0, 720899, 11, 0, 720900, 11, 0, 720901, 11, 0, 720902, 11, 0, 720903, 11, 0, 720904, 11, 0, 720905, 11, 0, 720906, 11, 0, 720907, 11, 0, 720908, 11, 0, 720909, 11, 0, 786432, 11, 0, 786433, 11, 0, 786434, 11, 0, 786435, 11, 0, 786436, 11, 0, 786437, 11, 0, 786438, 11, 0, 786439, 11, 0, 786440, 11, 0, 786441, 11, 0, 786442, 11, 0, 786443, 11, 0, 786444, 11, 0, 786445, 11, 0, 851968, 11, 0, 851969, 11, 0, 851970, 11, 0, 851971, 11, 0, 851972, 11, 0, 851973, 11, 0, 851974, 11, 0, 851975, 11, 0, 851976, 11, 0, 851977, 11, 0, 851978, 11, 0, 851979, 11, 0, 851980, 11, 0, 851981, 11, 0 )
 
 [node name="Map Content" type="TileMap" parent="."]
 tile_set = SubResource( 6 )
 cell_size = Vector2( 128, 128 )
 format = 1
-tile_data = PoolIntArray( 0, 9, 0, 1, 9, 0, 2, 9, 0, 3, 9, 0, 4, 9, 0, 5, 9, 0, 6, 9, 0, 7, 9, 0, 8, 9, 0, 9, 9, 0, 10, 9, 0, 65536, 9, 0, 65546, 9, 0, 131072, 9, 0, 131074, 9, 0, 131076, 9, 0, 131078, 9, 0, 131080, 9, 0, 131082, 9, 0, 196608, 9, 0, 196618, 9, 0, 262144, 9, 0, 262146, 9, 0, 262148, 9, 0, 262150, 9, 0, 262152, 9, 0, 262154, 9, 0, 327680, 9, 0, 327690, 9, 0, 393216, 9, 0, 393218, 9, 0, 393220, 9, 0, 393222, 9, 0, 393224, 9, 0, 393226, 9, 0, 458752, 9, 0, 458762, 9, 0, 524288, 9, 0, 524290, 9, 0, 524292, 9, 0, 524294, 9, 0, 524296, 9, 0, 524298, 9, 0, 589824, 9, 0, 589834, 9, 0, 655360, 9, 0, 655361, 9, 0, 655362, 9, 0, 655363, 9, 0, 655364, 9, 0, 655365, 9, 0, 655366, 9, 0, 655367, 9, 0, 655368, 9, 0, 655369, 9, 0, 655370, 9, 0 )
+tile_data = PoolIntArray( 0, 9, 0, 1, 9, 0, 2, 9, 0, 3, 9, 0, 4, 9, 0, 5, 9, 0, 6, 9, 0, 7, 9, 0, 8, 9, 0, 9, 9, 0, 10, 9, 0, 11, 9, 0, 12, 9, 0, 13, 9, 0, 65536, 9, 0, 65549, 9, 0, 131072, 9, 0, 131074, 9, 0, 131075, 9, 0, 131077, 9, 0, 131078, 9, 0, 131079, 9, 0, 131080, 9, 0, 131082, 9, 0, 131083, 9, 0, 131085, 9, 0, 196608, 9, 0, 196621, 9, 0, 262144, 9, 0, 262146, 9, 0, 262147, 9, 0, 262148, 9, 0, 262150, 9, 0, 262151, 9, 0, 262153, 9, 0, 262154, 9, 0, 262155, 9, 0, 262157, 9, 0, 327680, 9, 0, 327693, 9, 0, 393216, 9, 0, 393222, 14, 0, 393223, 14, 0, 393229, 9, 0, 458752, 9, 0, 458758, 14, 0, 458759, 14, 0, 458765, 9, 0, 524288, 9, 0, 524301, 9, 0, 589824, 9, 0, 589826, 9, 0, 589827, 9, 0, 589828, 9, 0, 589830, 9, 0, 589831, 9, 0, 589833, 9, 0, 589834, 9, 0, 589835, 9, 0, 589837, 9, 0, 655360, 9, 0, 655373, 9, 0, 720896, 9, 0, 720898, 9, 0, 720899, 9, 0, 720901, 9, 0, 720902, 9, 0, 720903, 9, 0, 720904, 9, 0, 720906, 9, 0, 720907, 9, 0, 720909, 9, 0, 786432, 9, 0, 786445, 9, 0, 851968, 9, 0, 851969, 9, 0, 851970, 9, 0, 851971, 9, 0, 851972, 9, 0, 851973, 9, 0, 851974, 9, 0, 851975, 9, 0, 851976, 9, 0, 851977, 9, 0, 851978, 9, 0, 851979, 9, 0, 851980, 9, 0, 851981, 9, 0 )
 
 [node name="spawn_positions" type="Node2D" parent="."]
-editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }
@@ -514,19 +556,19 @@ __meta__ = {
 }
 
 [node name="2" type="Node2D" parent="spawn_positions"]
-position = Vector2( 1220, 192 )
+position = Vector2( 1600, 192 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="3" type="Node2D" parent="spawn_positions"]
-position = Vector2( 1220, 1220 )
+position = Vector2( 1600, 1600 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="4" type="Node2D" parent="spawn_positions"]
-position = Vector2( 192, 1220 )
+position = Vector2( 194, 1600 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -534,171 +576,98 @@ __meta__ = {
 [node name="Destoryabales" type="Node2D" parent="."]
 editor/display_folded = true
 
-[node name="BasicDestoryable" parent="Destoryabales" instance=ExtResource( 7 )]
-
-[node name="BasicDestoryable2" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 448, 448 )
-
-[node name="BasicDestoryable3" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 576, 448 )
-
-[node name="BasicDestoryable4" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 704, 448 )
-
-[node name="BasicDestoryable5" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 704, 320 )
-
-[node name="BasicDestoryable6" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 704, 192 )
-
-[node name="BasicDestoryable7" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 576, 192 )
-
-[node name="BasicDestoryable8" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 448, 192 )
-
-[node name="BasicDestoryable9" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 320, 448 )
-
-[node name="BasicDestoryable13" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 192, 448 )
-
-[node name="BasicDestoryable14" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 192, 576 )
-
-[node name="BasicDestoryable10" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 448, 576 )
-
-[node name="BasicDestoryable11" parent="Destoryabales" instance=ExtResource( 7 )]
+[node name="BasicDestoryable" parent="Destoryabales" instance=ExtResource( 10 )]
 position = Vector2( 704, 576 )
 
-[node name="BasicDestoryable16" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 576, 704 )
+[node name="BasicDestoryable2" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 704, 192 )
 
-[node name="BasicDestoryable17" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 448, 704 )
+[node name="BasicDestoryable15" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 704, 1600 )
 
-[node name="BasicDestoryable18" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 320, 704 )
-
-[node name="BasicDestoryable19" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 192, 704 )
-
-[node name="BasicDestoryable20" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 192, 832 )
-
-[node name="BasicDestoryable21" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 192, 960 )
-
-[node name="BasicDestoryable22" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 320, 960 )
-
-[node name="BasicDestoryable23" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 448, 960 )
-
-[node name="BasicDestoryable24" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 448, 832 )
-
-[node name="BasicDestoryable25" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 576, 960 )
-
-[node name="BasicDestoryable26" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 704, 960 )
-
-[node name="BasicDestoryable27" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 704, 832 )
-
-[node name="BasicDestoryable28" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 832, 704 )
-
-[node name="BasicDestoryable29" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 960, 832 )
-
-[node name="BasicDestoryable42" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 1216, 960 )
-
-[node name="BasicDestoryable43" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 832, 960 )
-
-[node name="BasicDestoryable44" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 960, 1088 )
-
-[node name="BasicDestoryable47" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 960, 1216 )
-
-[node name="BasicDestoryable48" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 832, 1216 )
-
-[node name="BasicDestoryable49" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 704, 1216 )
-
-[node name="BasicDestoryable50" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 704, 1088 )
-
-[node name="BasicDestoryable51" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 576, 1216 )
-
-[node name="BasicDestoryable52" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 448, 1088 )
-
-[node name="BasicDestoryable53" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 448, 1216 )
-
-[node name="BasicDestoryable45" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 1088, 960 )
-
-[node name="BasicDestoryable46" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 960, 960 )
-
-[node name="BasicDestoryable30" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 960, 576 )
-
-[node name="BasicDestoryable31" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 960, 448 )
-
-[node name="BasicDestoryable32" parent="Destoryabales" instance=ExtResource( 7 )]
+[node name="BasicDestoryable3" parent="Destoryabales" instance=ExtResource( 10 )]
 position = Vector2( 960, 192 )
 
-[node name="BasicDestoryable36" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 1088, 448 )
+[node name="BasicDestoryable10" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 960, 1600 )
 
-[node name="BasicDestoryable33" parent="Destoryabales" instance=ExtResource( 7 )]
+[node name="BasicDestoryable4" parent="Destoryabales" instance=ExtResource( 10 )]
 position = Vector2( 832, 192 )
 
-[node name="BasicDestoryable34" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 960, 320 )
+[node name="BasicDestoryable11" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 832, 1600 )
 
-[node name="BasicDestoryable35" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 1216, 448 )
+[node name="BasicDestoryable5" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 576, 320 )
 
-[node name="BasicDestoryable37" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 1216, 576 )
+[node name="BasicDestoryable6" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 704, 1216 )
 
-[node name="BasicDestoryable38" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 1216, 704 )
+[node name="BasicDestoryable7" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 194, 1216 )
 
-[node name="BasicDestoryable39" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 960, 704 )
+[node name="BasicDestoryable8" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 1216, 1472 )
 
-[node name="BasicDestoryable41" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 1088, 704 )
+[node name="BasicDestoryable9" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 320, 1088 )
 
-[node name="BasicDestoryable40" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 1216, 832 )
+[node name="BasicDestoryable13" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 320, 960 )
 
-[node name="BasicDestoryable12" parent="Destoryabales" instance=ExtResource( 7 )]
-position = Vector2( 832, 448 )
+[node name="BasicDestoryable14" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 1472, 960 )
 
-[node name="Item" parent="." instance=ExtResource( 8 )]
+[node name="BasicDestoryable19" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 1472, 1088 )
 
-[node name="Item2" parent="." instance=ExtResource( 8 )]
+[node name="BasicDestoryable20" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 320, 832 )
+
+[node name="BasicDestoryable21" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 320, 704 )
+
+[node name="BasicDestoryable42" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 1600, 320 )
+
+[node name="BasicDestoryable47" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 576, 1472 )
+
+[node name="BasicDestoryable53" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 1088, 1216 )
+
+[node name="BasicDestoryable45" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 1600, 1216 )
+
+[node name="BasicDestoryable31" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 194, 1472 )
+
+[node name="BasicDestoryable32" parent="Destoryabales" instance=ExtResource( 10 )]
 position = Vector2( 192, 320 )
 
-[node name="Item3" parent="." instance=ExtResource( 8 )]
+[node name="BasicDestoryable36" parent="Destoryabales" instance=ExtResource( 10 )]
 position = Vector2( 1216, 320 )
 
-[node name="Item4" parent="." instance=ExtResource( 8 )]
-position = Vector2( 1216, 1088 )
+[node name="BasicDestoryable33" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 1088, 576 )
 
-[node name="Item5" parent="." instance=ExtResource( 8 )]
-position = Vector2( 192, 1088 )
+[node name="BasicDestoryable34" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 1472, 704 )
+
+[node name="BasicDestoryable35" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 1600, 1472 )
+
+[node name="BasicDestoryable37" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 1472, 832 )
+
+[node name="BasicDestoryable38" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 192, 576 )
+
+[node name="BasicDestoryable40" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 1600, 576 )
+
+[node name="BasicDestoryable12" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 1088, 192 )
+
+[node name="BasicDestoryable16" parent="Destoryabales" instance=ExtResource( 10 )]
+position = Vector2( 1088, 1600 )
