@@ -92,6 +92,7 @@ player2_fire={
 2d_physics/layer_2="Players & Pickups"
 2d_physics/layer_3="Destructables"
 2d_physics/layer_4="Explosions"
+2d_physics/layer_5="Bombs"
 
 [rendering]
 

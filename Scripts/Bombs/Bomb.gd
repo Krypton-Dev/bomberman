@@ -25,7 +25,10 @@ func _process(delta):
 	if elapsed >= lifetime:
 		explode()
 
-func explode():
+func queue_explode():
+	elapsed = lifetime
+		
+func explode():	
 	for x in range(0, explosion_range):
 		if not explodeIfSpace(Vector2(-x, 0)):
 			break
@@ -67,6 +70,15 @@ func explodeIfSpace(rel_pos):
 			item["collider"].queue_free()
 		return true # continiue spreading
 	
+	# check for other bombs
+	var collision_layer_bombs = 16
+	print("collision_layer_bombs ", collision_layer_bombs)	
+	var bombs = gm.get_collisions(collision_layer_bombs, new_pos, true, false, 5, [self])
+	if not bombs.empty():
+		for bomb in bombs:
+			bomb["collider"].queue_explode()
+		return true # continiue spreading
+		
 	# check for destroyables
 	if gm.check_for_collision(4, new_pos):
 		print("explosion collision w/ block @", new_pos)		
