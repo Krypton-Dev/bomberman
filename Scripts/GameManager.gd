@@ -5,6 +5,8 @@ var item = preload("res://Scripts/Items/Item.tscn")
 var current_scene = null
 var respawn_time = 2
 
+var next_item_drop = 0
+
 var player_scores = [ 0, 0, 0, 0 ]
 var player_inventories = [
 	null, null, null, null
@@ -20,13 +22,20 @@ signal player_inventory_updated
 
 func _ready():
 	print("Start game")
+	randomize()
 	
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() - 1)
 	
 	clear_inventories()
 	spawn_players()	
+	
+	spawn_random_item()
 
+func _process(delta):
+	next_item_drop -= delta
+	if next_item_drop <= 0:
+		spawn_random_item()
 ###################################
 ############## SPAWN ##############
 ###################################
@@ -61,6 +70,28 @@ func spawn_item(position:Vector2, item_type:String):
 	item_instance.position = position
 	item_instance.set_item_type(item_type)
 	current_scene.add_child(item_instance)
+
+func spawn_random_item():
+	print("spawn random item was called!")
+	next_item_drop = rand_range(5, 15)
+	var background: TileMap = current_scene.get_node("Map Background")
+	var valid_spaces = []
+	for cell in background.get_used_cells():
+		var abs_pos = cell * background.cell_size + background.cell_size / 2
+		if not check_for_collision(1 | 2 | 4, abs_pos, true):
+			valid_spaces.push_back(abs_pos)
+			
+	if valid_spaces.empty():
+		print("no free spaces to spawn item!")
+		return
+		
+	for space in valid_spaces:
+		print(space / background.cell_size)
+	
+	valid_spaces.shuffle()
+	var random_pos = valid_spaces.pop_back()
+	print("spawning item @ ", random_pos / background.cell_size)
+	spawn_item(random_pos, "bomb")
 
 #######################################
 ############## INVENTORY ##############
@@ -141,8 +172,6 @@ func getColor(player_id):
 		
 	return "Green"
 
-
-	
 func on_destoryable_destroyed(destroyable, player_id):
 	if not propabilities.has(destroyable.type):
 		return
@@ -152,3 +181,7 @@ func on_destoryable_destroyed(destroyable, player_id):
 		if randf() <= props[item_type]:
 			#give_item(player_id, item_type)
 			spawn_item(destroyable.position, item_type)
+			
+func check_for_collision(layer, abs_pos, areas = false):	
+	var collisions = current_scene.get_world_2d().direct_space_state.intersect_point(abs_pos, 1, [], layer, true, areas)
+	return len(collisions) > 0

@@ -4,7 +4,9 @@ var elapsed = 0
 var explosion = preload("res://Scripts/Bombs/Explosion.tscn")
 var explosion_range = 3
 var player_id = -1
+
 onready var sprite = $AnimatedSprite
+onready var gm = $"/root/GameManager"
 
 export var grid_size = 128
 export var lifetime = 2
@@ -42,11 +44,6 @@ func explode():
 			
 	queue_free()	
 	
-	
-func checkForCollision(layer, abs_pos):	
-	var collisions = get_world_2d().direct_space_state.intersect_point(abs_pos, 1, [], layer)
-	return len(collisions) > 0
-	
 func spawnExplosion(abs_pos):
 	var explosionInstance = explosion.instance()
 	explosionInstance.position = abs_pos
@@ -56,9 +53,9 @@ func spawnExplosion(abs_pos):
 func explodeIfSpace(rel_pos):
 	var new_pos = position + rel_pos * grid_size
 	var collisionLayerBorders = 1	
-	if checkForCollision(collisionLayerBorders, new_pos):
+	if gm.check_for_collision(collisionLayerBorders, new_pos):
 		return false
-	if checkForCollision(4, new_pos):
+	if gm.check_for_collision(4, new_pos):
 		print("explosion collision w/ block @", new_pos)
 		spawnExplosion(new_pos)
 		return false
