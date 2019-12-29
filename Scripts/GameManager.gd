@@ -9,6 +9,7 @@ var respawn_time = 2
 
 var next_item_drop = 0
 
+var active_players = []
 var player_scores = [ 0, 0, 0, 0 ]
 var player_inventories = [
 	null, null, null, null
@@ -46,6 +47,29 @@ func start_game():
 	spawn_players()	
 	
 	spawn_random_item()
+	
+#####################################
+############## PLAYERS ##############
+#####################################
+
+# Valid input_methods: keyboard[1-4], controller[device_id], network[peer_id]
+func add_player(input_method):
+	assert(active_players.size() < 4)
+	
+	active_players.append({
+		input_method = input_method
+	})
+	
+	print("current players ", active_players)
+	
+func get_player_count():
+	return active_players.size()
+	
+func get_player(player_id):
+	assert(player_id >= 1)
+	assert(player_id <= active_players.size())
+	
+	return active_players[player_id-1]
 		
 ###################################
 ############## SPAWN ##############

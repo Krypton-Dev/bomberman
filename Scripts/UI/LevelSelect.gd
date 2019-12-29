@@ -25,6 +25,8 @@ onready var player1 = $CenterContainer/VBoxContainer/Player1
 onready var player2 = $CenterContainer/VBoxContainer/Player2
 onready var player3 = $CenterContainer/VBoxContainer/Player3
 onready var player4 = $CenterContainer/VBoxContainer/Player4
+onready var gm = $"/root/GameManager"
+
 var players = null
 
 var player_count = 0
@@ -119,12 +121,14 @@ func add_player(input):
 	players[player_count].input_method = input
 	player_count = player_count + 1
 	
+	gm.add_player(input)
+	
 	update_player_display()
 	
 func update_player_display():
 	for i in range(player_count):
 		var label = players[i].ui.get_node("Label")
-		label.bbcode_text = "[center][color=" + get_player_color(i) + "]Player " + str(i+1) + "[/color][/center]"
+		label.bbcode_text = "[center][color=" + get_player_color(i) + "]Player " + str(i+1) + "[/color]  [img=26x26]" + get_input_icon(players[i].input_method) + "[/img][/center]"
 		players[i].ui.show()
 		
 	if player_count == 4:
@@ -163,3 +167,10 @@ func get_player_color(player_id):
 		return "#398ea0"
 	if player_id == 3:
 		return "#8739a0"
+		
+func get_input_icon(input_method: String):
+	if input_method.begins_with("keyboard"):
+		return "Assets/UI/" + input_method + ".png"
+	if input_method.begins_with("controller"):
+		var input_device_id = int(input_method.trim_prefix("controller"))
+		return "Assets/UI/controller" + str(input_device_id+1) + ".png"
