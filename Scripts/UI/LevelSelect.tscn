@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/UI/UITheme.tres" type="Theme" id=1]
 [ext_resource path="res://Scripts/UI/LevelSelect.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Kenney Bold.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 3 )
 
 [node name="LevelSelect" type="Control"]
 anchor_right = 1.0
@@ -9,54 +13,145 @@ anchor_bottom = 1.0
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -250.0
-margin_top = -234.0
-margin_right = 250.0
-margin_bottom = 234.0
-custom_constants/separation = 40
+[node name="Back" type="Button" parent="."]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 94.0
+margin_bottom = 54.0
+text = "Back"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 500.0
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 503.0
+margin_top = 82.0
+margin_right = 863.0
+margin_bottom = 686.0
+custom_constants/separation = 20
+
+[node name="LevelSelector" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+editor/display_folded = true
+margin_right = 360.0
 margin_bottom = 44.0
 custom_constants/separation = 30
 alignment = 1
 
-[node name="Prev" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 70.0
-margin_right = 154.0
+[node name="Prev" type="Button" parent="CenterContainer/VBoxContainer/LevelSelector"]
+margin_right = 84.0
 margin_bottom = 44.0
 text = "Prev"
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
-margin_left = 184.0
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/LevelSelector"]
+margin_left = 114.0
 margin_top = 10.0
-margin_right = 316.0
+margin_right = 246.0
 margin_bottom = 34.0
 text = "Dev Level"
 align = 1
 
-[node name="Next" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 346.0
-margin_right = 430.0
+[node name="Next" type="Button" parent="CenterContainer/VBoxContainer/LevelSelector"]
+margin_left = 276.0
+margin_right = 360.0
 margin_bottom = 44.0
 text = "Next"
 
-[node name="ViewportContainer" type="ViewportContainer" parent="VBoxContainer"]
-margin_left = 100.0
-margin_top = 84.0
-margin_right = 400.0
-margin_bottom = 384.0
+[node name="Player1" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+margin_top = 64.0
+margin_right = 360.0
+margin_bottom = 88.0
+custom_constants/separation = 10
+alignment = 1
+
+[node name="Label" type="RichTextLabel" parent="CenterContainer/VBoxContainer/Player1"]
+margin_right = 360.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 0, 24 )
+rect_clip_content = false
+size_flags_horizontal = 3
+custom_fonts/mono_font = SubResource( 1 )
+custom_fonts/normal_font = SubResource( 1 )
+custom_colors/default_color = Color( 1, 1, 1, 1 )
+bbcode_enabled = true
+bbcode_text = "Press Arrow Keys To add"
+text = "Press Arrow Keys To add"
+scroll_active = false
+
+[node name="Player2" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+margin_top = 108.0
+margin_right = 360.0
+margin_bottom = 132.0
+custom_constants/separation = 10
+alignment = 1
+
+[node name="Label" type="RichTextLabel" parent="CenterContainer/VBoxContainer/Player2"]
+margin_right = 360.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 0, 24 )
+rect_clip_content = false
+size_flags_horizontal = 3
+custom_fonts/mono_font = SubResource( 1 )
+custom_fonts/normal_font = SubResource( 1 )
+custom_colors/default_color = Color( 1, 1, 1, 1 )
+bbcode_enabled = true
+bbcode_text = "Press Arrow Keys To add"
+text = "Press Arrow Keys To add"
+scroll_active = false
+
+[node name="Player3" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+margin_top = 152.0
+margin_right = 360.0
+margin_bottom = 176.0
+custom_constants/separation = 10
+alignment = 1
+
+[node name="Label" type="RichTextLabel" parent="CenterContainer/VBoxContainer/Player3"]
+margin_right = 360.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 0, 24 )
+rect_clip_content = false
+size_flags_horizontal = 3
+custom_fonts/mono_font = SubResource( 1 )
+custom_fonts/normal_font = SubResource( 1 )
+custom_colors/default_color = Color( 1, 1, 1, 1 )
+bbcode_enabled = true
+bbcode_text = "Press Arrow Keys To add"
+text = "Press Arrow Keys To add"
+scroll_active = false
+
+[node name="Player4" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+margin_top = 196.0
+margin_right = 360.0
+margin_bottom = 220.0
+custom_constants/separation = 10
+alignment = 1
+
+[node name="Label" type="RichTextLabel" parent="CenterContainer/VBoxContainer/Player4"]
+margin_right = 360.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 0, 24 )
+rect_clip_content = false
+size_flags_horizontal = 3
+custom_fonts/mono_font = SubResource( 1 )
+custom_fonts/normal_font = SubResource( 1 )
+custom_colors/default_color = Color( 1, 1, 1, 1 )
+bbcode_enabled = true
+bbcode_text = "Press Arrow Keys To add"
+text = "Press Arrow Keys To add"
+scroll_active = false
+
+[node name="ViewportContainer" type="ViewportContainer" parent="CenterContainer/VBoxContainer"]
+margin_left = 30.0
+margin_top = 240.0
+margin_right = 330.0
+margin_bottom = 540.0
 rect_min_size = Vector2( 300, 300 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
 stretch = true
 
-[node name="PreviewViewport" type="Viewport" parent="VBoxContainer/ViewportContainer"]
+[node name="PreviewViewport" type="Viewport" parent="CenterContainer/VBoxContainer/ViewportContainer"]
 size = Vector2( 700, 700 )
 handle_input_locally = false
 usage = 0
@@ -64,11 +159,12 @@ render_target_update_mode = 3
 physics_object_picking = true
 gui_disable_input = true
 
-[node name="Start Game" type="Button" parent="VBoxContainer"]
-margin_top = 424.0
-margin_right = 500.0
-margin_bottom = 468.0
+[node name="Start Game" type="Button" parent="CenterContainer/VBoxContainer"]
+margin_top = 560.0
+margin_right = 360.0
+margin_bottom = 604.0
 text = "Start Game"
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Prev" to="." method="_on_prev_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Next" to="." method="_on_next_pressed"]
-[connection signal="pressed" from="VBoxContainer/Start Game" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/LevelSelector/Prev" to="." method="_on_prev_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/LevelSelector/Next" to="." method="_on_next_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Start Game" to="." method="_on_start_pressed"]
