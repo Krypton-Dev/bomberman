@@ -199,3 +199,16 @@ func get_collisions(layer, abs_pos, areas = false, bodies = true, count = 1, exc
 func check_for_collision(layer, abs_pos, areas = false, bodies = true):	
 	var collisions = get_collisions(layer, abs_pos, areas, bodies)
 	return len(collisions) > 0
+	
+func get_player_color(player_id: int):
+	if player_id == 1:
+		return Color("28b162") # green
+	if player_id == 2:
+		return Color("a03939") # red
+	if player_id == 3:
+		return Color("398ea0") # blue 
+	if player_id == 4:
+		return Color("8739a0") # purple
+		
+	return Color("ffffff") # white
+	

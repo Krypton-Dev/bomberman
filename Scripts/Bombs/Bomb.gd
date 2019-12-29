@@ -13,7 +13,8 @@ export var lifetime = 2
 
 func _ready():
 	sprite.playing = true
-
+	modulate = gm.get_player_color(player_id).lightened(0.6666)
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	elapsed += delta
@@ -21,7 +22,6 @@ func _process(delta):
 	var animation_speed = pow(progress + 1, 3)
 	sprite.speed_scale = animation_speed
 	#var animation_speed = -pow(progress, 3) + 1
-	#modulate = Color(1,1,1, alpha)
 	if elapsed >= lifetime:
 		explode()
 
