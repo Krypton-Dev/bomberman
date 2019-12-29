@@ -15,6 +15,8 @@ var spawn_delay_elapsed = 0
 var dead = false
 var gm = null
 
+var controller_state = {}
+
 var bomb = preload("res://Scripts/Bombs/Bomb.tscn")
 var death_animation = preload("res://Scripts/Player/death_animation.tscn")
 
@@ -32,9 +34,8 @@ func _process(delta):
 	
 	if not spawned:
 		return		
-
-	if Input.is_action_just_pressed(getInputAction("fire")):
-		print("fire")
+		
+	if check_action("fire", true):
 		fire()
 		
 	if not in_safe_mode:
@@ -42,6 +43,49 @@ func _process(delta):
 		if spawn_safe_time_elapsed >= spawn_safe_time:
 			in_safe_mode = false
 
+func check_action(action, just = false):
+	var input_method = gm.get_player(player_id).input_method as String
+	if input_method == "network":
+		return false # this is a remote player
+		
+	var device_id = input_method.trim_prefix("controller").trim_prefix("keyboard")
+	if input_method.begins_with("keyboard"):
+		if just:
+			return Input.is_action_just_pressed("player" + device_id + "_" + action)
+		else:
+			return Input.is_action_pressed("player" + device_id + "_" + action)
+			
+	if input_method.begins_with("controller"):
+		var controller_button = null
+		if action == "fire":
+			controller_button = JOY_XBOX_A
+		elif action == "up":
+			controller_button = JOY_DPAD_UP
+		elif action == "down":
+			controller_button = JOY_DPAD_DOWN
+		elif action == "left":
+			controller_button = JOY_DPAD_LEFT
+		elif action == "right":
+			controller_button = JOY_DPAD_RIGHT
+		
+		if just:
+			var ret = false
+			if not controller_state.has(action):
+				controller_state[action] = false
+				
+			if Input.is_joy_button_pressed(int(device_id), controller_button):
+				if not controller_state[action]:
+					ret = true
+				controller_state[action] = true
+			else:
+				controller_state[action] = false
+				
+			return ret
+		else:
+			return Input.is_joy_button_pressed(int(device_id), controller_button)
+		
+	# Unimplemented control?!
+	return false
 
 func fire():
 	if gm.has_item(player_id, "bomb"):
@@ -76,16 +120,16 @@ func _physics_process(delta):
 		return
 		
 	var dir = Vector2()
-	if Input.is_action_pressed(getInputAction("down")):
+	if check_action("down"):
 		sprite.play("down")
 		dir.y += 1	
-	if Input.is_action_pressed(getInputAction("up")):
+	if check_action("up"):
 		sprite.play("up")
 		dir.y -= 1	
-	if Input.is_action_pressed(getInputAction("left")):
+	if check_action("left"):
 		sprite.play("left")
 		dir.x -= 1	
-	if Input.is_action_pressed(getInputAction("right")):
+	if check_action("right"):
 		sprite.play("right")
 		dir.x += 1	
 		
@@ -93,7 +137,3 @@ func _physics_process(delta):
 		sprite.play("default")
 		
 	move_and_slide(dir * speed)
-
-
-func getInputAction(action):
-	return "player" + str(player_id) + "_" + action

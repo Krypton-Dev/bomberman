@@ -86,7 +86,7 @@ func get_randomized_spawn_positions():
 
 func spawn_players():		
 	var locations = get_randomized_spawn_positions()
-	for player_id in range(1, 5):
+	for player_id in range(1, active_players.size() + 1):
 		var playerInstance = player.instance()
 		playerInstance.position = locations.pop_back()
 		playerInstance.player_id = player_id
