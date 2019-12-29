@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/UI/UITheme.tres" type="Theme" id=1]
 [ext_resource path="res://Scripts/UI/MainMenu.gd" type="Script" id=2]
@@ -10,6 +10,10 @@ size = 32
 use_mipmaps = true
 use_filter = true
 extra_spacing_bottom = -7
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 6
 font_data = ExtResource( 4 )
 
 [node name="MainMenu" type="Control"]
@@ -68,6 +72,15 @@ margin_top = 226.0
 margin_right = 398.0
 margin_bottom = 270.0
 text = "Quit Game"
+
+[node name="Copyright" type="Label" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = -10.0
+margin_right = 273.0
+custom_fonts/font = SubResource( 2 )
+text = "by Jonas Bernemann and Max Huster. Assets by Kenney"
 [connection signal="pressed" from="VBoxContainer/Local Multiplayer" to="." method="_on_local_pressed"]
 [connection signal="pressed" from="VBoxContainer/Network Multiplayer" to="." method="_on_network_pressed"]
 [connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_exit_pressed"]
