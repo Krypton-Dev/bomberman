@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scripts/Level.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Player/PlayerScoreGUI.gd" type="Script" id=2]
@@ -16,6 +16,9 @@
 points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
+points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
+
+[sub_resource type="ConvexPolygonShape2D" id=7]
 points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
 
 [sub_resource type="ConvexPolygonShape2D" id=3]
@@ -186,7 +189,13 @@ points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
 14/tile_mode = 0
 14/occluder_offset = Vector2( 0, 0 )
 14/navigation_offset = Vector2( 0, 0 )
-14/shapes = [  ]
+14/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 7 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
 14/z_index = 0
 
 [node name="Node2D" type="Node2D"]
@@ -544,7 +553,7 @@ tile_data = PoolIntArray( 0, 11, 0, 1, 11, 0, 2, 11, 0, 3, 11, 0, 4, 11, 0, 5, 1
 tile_set = SubResource( 6 )
 cell_size = Vector2( 128, 128 )
 format = 1
-tile_data = PoolIntArray( 0, 9, 0, 1, 9, 0, 2, 9, 0, 3, 9, 0, 4, 9, 0, 5, 9, 0, 6, 9, 0, 7, 9, 0, 8, 9, 0, 9, 9, 0, 10, 9, 0, 11, 9, 0, 12, 9, 0, 13, 9, 0, 65536, 9, 0, 65549, 9, 0, 131072, 9, 0, 131074, 9, 0, 131075, 9, 0, 131077, 9, 0, 131078, 9, 0, 131079, 9, 0, 131080, 9, 0, 131082, 9, 0, 131083, 9, 0, 131085, 9, 0, 196608, 9, 0, 196621, 9, 0, 262144, 9, 0, 262146, 9, 0, 262147, 9, 0, 262148, 9, 0, 262150, 9, 0, 262151, 9, 0, 262153, 9, 0, 262154, 9, 0, 262155, 9, 0, 262157, 9, 0, 327680, 9, 0, 327693, 9, 0, 393216, 9, 0, 393222, 14, 0, 393223, 14, 0, 393229, 9, 0, 458752, 9, 0, 458758, 14, 0, 458759, 14, 0, 458765, 9, 0, 524288, 9, 0, 524301, 9, 0, 589824, 9, 0, 589826, 9, 0, 589827, 9, 0, 589828, 9, 0, 589830, 9, 0, 589831, 9, 0, 589833, 9, 0, 589834, 9, 0, 589835, 9, 0, 589837, 9, 0, 655360, 9, 0, 655373, 9, 0, 720896, 9, 0, 720898, 9, 0, 720899, 9, 0, 720901, 9, 0, 720902, 9, 0, 720903, 9, 0, 720904, 9, 0, 720906, 9, 0, 720907, 9, 0, 720909, 9, 0, 786432, 9, 0, 786445, 9, 0, 851968, 9, 0, 851969, 9, 0, 851970, 9, 0, 851971, 9, 0, 851972, 9, 0, 851973, 9, 0, 851974, 9, 0, 851975, 9, 0, 851976, 9, 0, 851977, 9, 0, 851978, 9, 0, 851979, 9, 0, 851980, 9, 0, 851981, 9, 0 )
+tile_data = PoolIntArray( 0, 9, 0, 1, 9, 0, 2, 9, 0, 3, 9, 0, 4, 9, 0, 5, 9, 0, 6, 9, 0, 7, 9, 0, 8, 9, 0, 9, 9, 0, 10, 9, 0, 11, 9, 0, 12, 9, 0, 13, 9, 0, 65536, 9, 0, 65549, 9, 0, 131072, 9, 0, 131074, 9, 0, 131075, 9, 0, 131077, 9, 0, 131078, 9, 0, 131079, 9, 0, 131080, 9, 0, 131082, 9, 0, 131083, 9, 0, 131085, 9, 0, 196608, 9, 0, 196621, 9, 0, 262144, 9, 0, 262146, 9, 0, 262147, 9, 0, 262148, 9, 0, 262150, 9, 0, 262151, 9, 0, 262153, 9, 0, 262154, 9, 0, 262155, 9, 0, 262157, 9, 0, 327680, 9, 0, 327693, 9, 0, 393216, 9, 0, 393218, 9, 0, 393220, 9, 0, 393222, 14, 0, 393223, 14, 0, 393225, 9, 0, 393227, 9, 0, 393229, 9, 0, 458752, 9, 0, 458754, 9, 0, 458756, 9, 0, 458758, 14, 0, 458759, 14, 0, 458761, 9, 0, 458763, 9, 0, 458765, 9, 0, 524288, 9, 0, 524301, 9, 0, 589824, 9, 0, 589826, 9, 0, 589827, 9, 0, 589828, 9, 0, 589830, 9, 0, 589831, 9, 0, 589833, 9, 0, 589834, 9, 0, 589835, 9, 0, 589837, 9, 0, 655360, 9, 0, 655373, 9, 0, 720896, 9, 0, 720898, 9, 0, 720899, 9, 0, 720901, 9, 0, 720902, 9, 0, 720903, 9, 0, 720904, 9, 0, 720906, 9, 0, 720907, 9, 0, 720909, 9, 0, 786432, 9, 0, 786445, 9, 0, 851968, 9, 0, 851969, 9, 0, 851970, 9, 0, 851971, 9, 0, 851972, 9, 0, 851973, 9, 0, 851974, 9, 0, 851975, 9, 0, 851976, 9, 0, 851977, 9, 0, 851978, 9, 0, 851979, 9, 0, 851980, 9, 0, 851981, 9, 0 )
 
 [node name="spawn_positions" type="Node2D" parent="."]
 __meta__ = {
@@ -576,7 +585,6 @@ __meta__ = {
 }
 
 [node name="Destoryabales" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="BasicDestoryable" parent="Destoryabales" instance=ExtResource( 11 )]
 position = Vector2( 704, 576 )
@@ -614,17 +622,8 @@ position = Vector2( 1216, 1472 )
 [node name="BasicDestoryable9" parent="Destoryabales" instance=ExtResource( 11 )]
 position = Vector2( 320, 1088 )
 
-[node name="BasicDestoryable13" parent="Destoryabales" instance=ExtResource( 11 )]
-position = Vector2( 320, 960 )
-
-[node name="BasicDestoryable14" parent="Destoryabales" instance=ExtResource( 11 )]
-position = Vector2( 1472, 960 )
-
 [node name="BasicDestoryable19" parent="Destoryabales" instance=ExtResource( 11 )]
 position = Vector2( 1472, 1088 )
-
-[node name="BasicDestoryable20" parent="Destoryabales" instance=ExtResource( 11 )]
-position = Vector2( 320, 832 )
 
 [node name="BasicDestoryable21" parent="Destoryabales" instance=ExtResource( 11 )]
 position = Vector2( 320, 704 )
@@ -658,9 +657,6 @@ position = Vector2( 1472, 704 )
 
 [node name="BasicDestoryable35" parent="Destoryabales" instance=ExtResource( 11 )]
 position = Vector2( 1600, 1472 )
-
-[node name="BasicDestoryable37" parent="Destoryabales" instance=ExtResource( 11 )]
-position = Vector2( 1472, 832 )
 
 [node name="BasicDestoryable38" parent="Destoryabales" instance=ExtResource( 11 )]
 position = Vector2( 192, 576 )

@@ -84,7 +84,7 @@ func spawn_item(position:Vector2, item_type:String):
 
 func spawn_random_item():
 	print("spawn random item was called!")
-	next_item_drop = rand_range(5, 15)
+	next_item_drop = rand_range(3, 5)
 	var background: TileMap = current_scene.get_node("Map Background")
 	var valid_spaces = []
 	for cell in background.get_used_cells():
