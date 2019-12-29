@@ -60,7 +60,7 @@ stretch = true
 size = Vector2( 700, 700 )
 handle_input_locally = false
 usage = 0
-render_target_update_mode = 1
+render_target_update_mode = 3
 physics_object_picking = true
 gui_disable_input = true
 

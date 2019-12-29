@@ -4,7 +4,8 @@ enum ItemType {
 	RANDOM,
 	BOMB
 }	
-
+export var lifetime = 10
+var time_expired = 0
 func get_enum_string(type):
 	if type == ItemType.RANDOM:
 		return "random"
@@ -16,6 +17,11 @@ func get_enum_string(type):
 
 onready var sprite = $Sprite
 export(ItemType) var item_type = ItemType.RANDOM
+
+func _process(delta):
+	time_expired += delta
+	if time_expired >= lifetime:
+		queue_free()
 
 func _ready():
 	var path = "res://Assets/Items/item_" + get_enum_string(item_type) + ".png"

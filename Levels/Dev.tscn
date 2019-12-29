@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scripts/Level.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Player/PlayerScoreGUI.gd" type="Script" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://Assets/UI/bomb.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Map/tilesheet.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Destoryables/BasicDestoryable.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Scripts/Items/Item.tscn" type="PackedScene" id=9]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
@@ -690,17 +689,3 @@ position = Vector2( 1216, 832 )
 
 [node name="BasicDestoryable12" parent="Destoryabales" instance=ExtResource( 8 )]
 position = Vector2( 832, 448 )
-
-[node name="Item" parent="." instance=ExtResource( 9 )]
-
-[node name="Item2" parent="." instance=ExtResource( 9 )]
-position = Vector2( 192, 320 )
-
-[node name="Item3" parent="." instance=ExtResource( 9 )]
-position = Vector2( 1216, 320 )
-
-[node name="Item4" parent="." instance=ExtResource( 9 )]
-position = Vector2( 1216, 1088 )
-
-[node name="Item5" parent="." instance=ExtResource( 9 )]
-position = Vector2( 192, 1088 )
