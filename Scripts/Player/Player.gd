@@ -57,16 +57,29 @@ func check_action(action, just = false):
 			
 	if input_method.begins_with("controller"):
 		var controller_button = null
+		var analog = false
+		var analog_axis = null
+		var analog_negative = false
 		if action == "fire":
 			controller_button = JOY_XBOX_A
 		elif action == "up":
 			controller_button = JOY_DPAD_UP
+			analog = true
+			analog_negative = true
+			analog_axis = JOY_AXIS_1
 		elif action == "down":
 			controller_button = JOY_DPAD_DOWN
+			analog = true
+			analog_axis = JOY_AXIS_1
 		elif action == "left":
 			controller_button = JOY_DPAD_LEFT
+			analog = true
+			analog_negative = true
+			analog_axis = JOY_AXIS_0
 		elif action == "right":
 			controller_button = JOY_DPAD_RIGHT
+			analog = true
+			analog_axis = JOY_AXIS_0
 		
 		if just:
 			var ret = false
@@ -82,6 +95,14 @@ func check_action(action, just = false):
 				
 			return ret
 		else:
+			if analog:
+				var value = Input.get_joy_axis(int(device_id), analog_axis)
+				if analog_negative:
+					value = -value
+					
+				if value >= 0.25:
+					return true
+			
 			return Input.is_joy_button_pressed(int(device_id), controller_button)
 		
 	# Unimplemented control?!
@@ -135,5 +156,8 @@ func _physics_process(delta):
 		
 	if dir.length() == 0:
 		sprite.play("default")
+		
+	# make sure direction vector is always 1 unit long, so player is not faster when walking directional
+	dir = dir.normalized()
 		
 	move_and_slide(dir * speed)
