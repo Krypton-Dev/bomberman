@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Player/PlayerScoreGUI.gd" type="Script" id=1]
 [ext_resource path="res://Assets/ScoreLabelFont.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Scripts/Player/PlayerInventoryIconGUI.gd" type="Script" id=3]
 [ext_resource path="res://Assets/UI/bomb_empty.png" type="Texture" id=4]
 [ext_resource path="res://Assets/UI/bomb.png" type="Texture" id=5]
+[ext_resource path="res://Scripts/Player/PlayerGroupGUI.gd" type="Script" id=6]
 
 [node name="UI" type="CanvasLayer"]
 
@@ -19,6 +20,11 @@ margin_bottom = -5.0
 [node name="Green (1)" type="VBoxContainer" parent="MarginContainer"]
 margin_right = 140.0
 margin_bottom = 60.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+player_id = 1
 
 [node name="Score" type="HBoxContainer" parent="MarginContainer/Green (1)"]
 margin_right = 140.0
@@ -43,7 +49,6 @@ text = "0"
 align = 2
 
 [node name="Bombs" type="HBoxContainer" parent="MarginContainer/Green (1)"]
-editor/display_folded = true
 margin_top = 28.0
 margin_right = 140.0
 margin_bottom = 60.0
@@ -102,6 +107,8 @@ anchor_right = 1.0
 margin_left = -140.0
 margin_bottom = 60.0
 alignment = 2
+script = ExtResource( 6 )
+player_id = 2
 
 [node name="Score" type="HBoxContainer" parent="MarginContainer/Red (2)"]
 margin_right = 140.0
@@ -180,6 +187,8 @@ anchor_bottom = 1.0
 margin_top = -60.0
 margin_right = 140.0
 alignment = 2
+script = ExtResource( 6 )
+player_id = 3
 
 [node name="Score" type="HBoxContainer" parent="MarginContainer/Blue (3)"]
 margin_right = 140.0
@@ -259,6 +268,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -140.0
 margin_top = -60.0
+script = ExtResource( 6 )
+player_id = 4
 
 [node name="Score" type="HBoxContainer" parent="MarginContainer/Purple (4)"]
 margin_right = 140.0
