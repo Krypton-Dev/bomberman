@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name Bomb
+
 var elapsed = 0
 var explosion = preload("res://Scripts/Bombs/Explosion.tscn")
 var explosion_range = 3
@@ -30,19 +32,19 @@ func queue_explode():
 		
 func explode():	
 	for x in range(0, explosion_range):
-		if not explodeIfSpace(Vector2(-x, 0)):
+		if explodeIfSpace(Vector2(-x, 0)) & 4 == 4:
 			break
 	
 	for x in range(1, explosion_range):
-		if not explodeIfSpace(Vector2(x, 0)):
+		if explodeIfSpace(Vector2(x, 0))  & 4 == 4:
 			break
 			
 	for y in range(0, explosion_range):
-		if not explodeIfSpace(Vector2(0, y)):
+		if explodeIfSpace(Vector2(0, y)) & 4 == 4:
 			break
 			
 	for y in range(1, explosion_range):
-		if not explodeIfSpace(Vector2(0, -y)):
+		if explodeIfSpace(Vector2(0, -y)) & 4 == 4:
 			break
 			
 	queue_free()	
@@ -53,12 +55,19 @@ func spawnExplosion(abs_pos):
 	explosionInstance.player_id = player_id
 	get_parent().add_child(explosionInstance)
 	
+enum ExplosionStatus {
+	CONTINUE			= 1,
+	HIT_BUT_CONTINUE	= 1 | 2,
+	STOP				= 4,
+	HIT					= 2 | 4,
+}
+	
 func explodeIfSpace(rel_pos):
 	var new_pos = position + rel_pos * grid_size
 	# check for static walls
 	var collisionLayerBorders = 1	
 	if gm.check_for_collision(collisionLayerBorders, new_pos):
-		return false # stop spreading
+		return ExplosionStatus.STOP # stop spreading
 		
 	spawnExplosion(new_pos)
 		
@@ -68,7 +77,7 @@ func explodeIfSpace(rel_pos):
 	if not items.empty():
 		for item in items:
 			item["collider"].queue_free()
-		return true # continiue spreading
+		return ExplosionStatus.HIT_BUT_CONTINUE # continiue spreading
 	
 	# check for other bombs
 	var collision_layer_bombs = 16
@@ -77,11 +86,11 @@ func explodeIfSpace(rel_pos):
 	if not bombs.empty():
 		for bomb in bombs:
 			bomb["collider"].queue_explode()
-		return true # continiue spreading
+		return ExplosionStatus.HIT_BUT_CONTINUE # continiue spreading
 		
 	# check for destroyables
 	if gm.check_for_collision(4, new_pos):
-		print("explosion collision w/ block @", new_pos)		
-		return false # stop spreading
+		print("explosion collision w/ block @", new_pos)
+		return ExplosionStatus.HIT # stop spreading
 	
-	return true
+	return ExplosionStatus.CONTINUE

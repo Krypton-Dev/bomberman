@@ -1,0 +1,99 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Assets/ScoreLabelFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scripts/Player/PlayerGroupGUI.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/Player/PlayerInventoryIconGUI.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/Player/PlayerScoreGUI.gd" type="Script" id=4]
+[ext_resource path="res://Assets/UI/bomb.png" type="Texture" id=5]
+[ext_resource path="res://Assets/UI/bomb_empty.png" type="Texture" id=6]
+[ext_resource path="res://Scripts/UI/Inventory.gd" type="Script" id=7]
+
+[node name="PlayerInventory" type="VBoxContainer"]
+margin_right = 140.0
+margin_bottom = 60.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+player_id = 1
+
+[node name="Score" type="HBoxContainer" parent="."]
+margin_right = 140.0
+margin_bottom = 24.0
+script = ExtResource( 4 )
+player_index = 1
+
+[node name="Label" type="Label" parent="Score"]
+margin_right = 80.0
+margin_bottom = 24.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0.156863, 0.694118, 0.384314, 1 )
+custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+text = "Green"
+
+[node name="Score" type="Label" parent="Score"]
+margin_left = 84.0
+margin_right = 100.0
+margin_bottom = 24.0
+custom_fonts/font = ExtResource( 1 )
+text = "0"
+align = 2
+
+[node name="Bombs" type="HBoxContainer" parent="."]
+margin_top = 28.0
+margin_right = 140.0
+margin_bottom = 60.0
+script = ExtResource( 3 )
+empty_icon = ExtResource( 6 )
+filled_icon = ExtResource( 5 )
+item_name = "bomb"
+player_id = 1
+
+[node name="1" type="TextureRect" parent="Bombs"]
+margin_right = 32.0
+margin_bottom = 32.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 1
+
+[node name="2" type="TextureRect" parent="Bombs"]
+margin_left = 36.0
+margin_right = 68.0
+margin_bottom = 32.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 1
+
+[node name="3" type="TextureRect" parent="Bombs"]
+margin_left = 72.0
+margin_right = 104.0
+margin_bottom = 32.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 1
+
+[node name="4" type="TextureRect" parent="Bombs"]
+margin_left = 108.0
+margin_right = 140.0
+margin_bottom = 32.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 1
+
+[node name="Inventory" type="HBoxContainer" parent="."]
+margin_top = 64.0
+margin_right = 140.0
+margin_bottom = 64.0
+script = ExtResource( 7 )

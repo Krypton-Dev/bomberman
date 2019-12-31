@@ -2,7 +2,8 @@ extends Node2D
 
 enum ItemType {
 	RANDOM,
-	BOMB
+	BOMB,
+	NUKE
 }	
 export var lifetime = 10
 var time_expired = 0
@@ -11,6 +12,8 @@ func get_enum_string(type):
 		return "random"
 	if type == ItemType.BOMB:
 		return "bomb"
+	if type == ItemType.NUKE:
+		return "nuke"
 		
 	assert(false)
 	
@@ -32,6 +35,8 @@ func get_enum_by_string (type: String):
 		return ItemType.RANDOM
 	if type.to_lower() == "bomb":
 		return ItemType.BOMB
+	if type.to_lower() == "nuke":
+		return ItemType.NUKE
 		
 	assert(false)
 

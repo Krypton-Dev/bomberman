@@ -18,6 +18,7 @@ var gm = null
 var controller_state = {}
 
 var bomb = preload("res://Scripts/Bombs/Bomb.tscn")
+var nuke = preload("res://Scripts/Bombs/Nuke.tscn")
 var death_animation = preload("res://Scripts/Player/death_animation.tscn")
 
 func _ready():
@@ -109,6 +110,15 @@ func check_action(action, just = false):
 	return false
 
 func fire():
+	if gm.has_item(player_id, "nuke"):
+		var newNuke = nuke.instance()
+		newNuke.player_id = player_id
+		newNuke.position = (position / 128).floor() * 128 + Vector2(64,64)
+		get_parent().add_child(newNuke)
+		
+		gm.remove_item(player_id, "nuke")
+		return
+	
 	if gm.has_item(player_id, "bomb"):
 		var newBomb = bomb.instance()
 		newBomb.player_id = player_id
@@ -116,6 +126,7 @@ func fire():
 		get_parent().add_child(newBomb)
 		
 		gm.remove_item(player_id, "bomb")
+		return
 
 
 func damage(player_id):

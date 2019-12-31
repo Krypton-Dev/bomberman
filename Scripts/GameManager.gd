@@ -107,26 +107,34 @@ func spawn_item(position:Vector2, item_type:String):
 	current_scene.add_child(item_instance)
 
 func spawn_random_item():
-	print("spawn random item was called!")
 	next_item_drop = rand_range(3, 5)
-	var background: TileMap = current_scene.get_node("Map Background")
-	var valid_spaces = []
-	for cell in background.get_used_cells():
-		var abs_pos = cell * background.cell_size + background.cell_size / 2
-		if not check_for_collision(1 | 2 | 4, abs_pos, true):
-			valid_spaces.push_back(abs_pos)
+	var valid_spaces = get_map_tiles(1 | 2 | 4)
 			
 	if valid_spaces.empty():
 		print("no free spaces to spawn item!")
 		return
-		
-	for space in valid_spaces:
-		print(space / background.cell_size)
 	
 	valid_spaces.shuffle()
 	var random_pos = valid_spaces.pop_back()
-	print("spawning item @ ", random_pos / background.cell_size)
-	spawn_item(random_pos, "bomb")
+
+	var item_type = "bomb"
+	var rand_value = randf()
+	if rand_value > 0.1 and rand_value <= 0.3:	# 20 %
+		item_type = "random"
+	if rand_value <= 0.1:						# 10 %
+		item_type = "nuke"
+
+	spawn_item(random_pos, item_type)
+	
+func get_map_tiles(collision_layer = 0):
+	var background: TileMap = current_scene.get_node("Map Background")
+	var valid_spaces = []
+	for cell in background.get_used_cells():
+		var abs_pos = cell * background.cell_size + background.cell_size / 2
+		if collision_layer == 0 or not check_for_collision(1 | 2 | 4, abs_pos, true):
+			valid_spaces.push_back(abs_pos)
+			
+	return valid_spaces
 
 #######################################
 ############## INVENTORY ##############
@@ -138,7 +146,8 @@ func clear_inventories():
 	
 func clear_inventory(player_id):
 	player_inventories[player_id-1] = {
-		bomb = 3
+		bomb = 3,
+		nuke = 0
 	}
 	
 	emit_signal("player_inventory_updated", player_id)
@@ -164,6 +173,8 @@ func remove_item(player_id, item, quantity = 1):
 func _ensure_storage(item, count):
 	if item == "bomb":
 		return min(4, max(0, count))
+	if item == "nuke":
+		return min(1, max(0, count))
 		
 	return count
 	
@@ -190,6 +201,24 @@ func get_score(player_id):
 		return -1
 		
 	return player_scores[player_id-1]
+
+#########################################
+############## CHEAT CODES ##############
+#########################################
+var cheat_buffer = ""
+
+func check_cheat_buffer():
+	if cheat_buffer.ends_with("givemenuke"):
+		give_item(1, "nuke")
+		cheat_buffer = ""
+
+func _input(event):
+	if event is InputEventKey:
+		var key = event.get_unicode()
+		if key > 0:
+			cheat_buffer += char(key)
+			
+		check_cheat_buffer()
 
 #####################################
 ############## GENERAL ##############
@@ -235,4 +264,16 @@ func get_player_color(player_id: int):
 		return Color("8739a0") # purple
 		
 	return Color("ffffff") # white
+	
+func get_player_name(player_id):
+	if player_id == 1:
+		return "Green"
+	if player_id == 2:
+		return "Red"
+	if player_id == 3:
+		return "Blue"
+	if player_id == 4:
+		return "Purple"
+		
+	return "???"
 	
