@@ -2,8 +2,6 @@ extends Bomb
 
 onready var icon = $NukeIcon
 
-var exploded = false
-
 func _ready():
 	._ready()
 	lifetime = 15
@@ -19,8 +17,6 @@ func sort_positions(pos_a, pos_b):
 	return false
 
 func explode():	
-	if exploded:
-		return
 		
 	hide()
 		

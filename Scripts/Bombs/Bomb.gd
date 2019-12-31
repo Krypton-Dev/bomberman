@@ -6,6 +6,7 @@ var elapsed = 0
 var explosion = preload("res://Scripts/Bombs/Explosion.tscn")
 var explosion_range = 3
 var player_id = -1
+var exploded = false
 
 onready var sprite = $AnimatedSprite
 onready var gm = $"/root/GameManager"
@@ -24,28 +25,37 @@ func _process(delta):
 	var animation_speed = pow(progress + 1, 3)
 	sprite.speed_scale = animation_speed
 	#var animation_speed = -pow(progress, 3) + 1
-	if elapsed >= lifetime:
+	if elapsed >= lifetime and not exploded:
+		exploded = true
 		explode()
 
 func queue_explode():
 	elapsed = lifetime
 		
 func explode():	
-	for x in range(0, explosion_range):
-		if explodeIfSpace(Vector2(-x, 0)) & 4 == 4:
-			break
+	hide()
+	var directions = {left = true, right = true, up = true, down = true}
 	
-	for x in range(1, explosion_range):
-		if explodeIfSpace(Vector2(x, 0))  & 4 == 4:
-			break
-			
-	for y in range(0, explosion_range):
-		if explodeIfSpace(Vector2(0, y)) & 4 == 4:
-			break
-			
-	for y in range(1, explosion_range):
-		if explodeIfSpace(Vector2(0, -y)) & 4 == 4:
-			break
+	if explodeIfSpace(Vector2(0, 0)) & 4 == 4:
+		queue_free()
+		return # should never happen but bomb likes like to be in a wall or so
+		
+	yield(get_tree().create_timer(0.1), "timeout")
+	
+	for offset in range(1, explosion_range):
+		if directions.left:
+			if explodeIfSpace(Vector2(-offset, 0)) & 4 == 4:
+				directions.left = false
+		if directions.right:
+			if explodeIfSpace(Vector2(offset, 0)) & 4 == 4:
+				directions.right = false
+		if directions.up:
+			if explodeIfSpace(Vector2(0, -offset)) & 4 == 4:
+				directions.up = false
+		if directions.down:
+			if explodeIfSpace(Vector2(0, offset)) & 4 == 4:
+				directions.down = false
+		yield(get_tree().create_timer(0.1), "timeout")
 			
 	queue_free()	
 	
