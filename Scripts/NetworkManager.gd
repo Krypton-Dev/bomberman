@@ -92,9 +92,3 @@ func send_start_game():
 	
 remote func start_game():
 	emit_signal("start_game")
-
-func send_refresh_inventory(player_id):
-	rpc("refresh_inventory", player_id)
-	
-remote func refresh_inventory(player_id):
-	emit_signal("refresh_inventory", player_id)

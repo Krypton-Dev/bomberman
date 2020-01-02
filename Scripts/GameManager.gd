@@ -12,10 +12,11 @@ var respawn_time = 2
 var next_item_drop = 0
 
 var active_players = []
-remote var player_scores = [ 0, 0, 0, 0 ]
+remote var player_scores = [ 0, 0, 0, 0 ] setget set_player_scores
 remote var player_inventories = [
 	null, null, null, null
-]
+] setget set_player_inventories
+
 var propabilities = {
 	0: {
 		bomb=0.333
@@ -166,7 +167,6 @@ func clear_inventory(player_id):
 	}
 	if nm.is_network_game:
 		rset("player_inventories", player_inventories)
-		nm.send_refresh_inventory(player_id)
 	
 	emit_signal("player_inventory_updated", player_id)
 	
@@ -184,7 +184,6 @@ func give_item(player_id, item, quantity = 1):
 	player_inventories[player_id-1][item] = _ensure_storage(item, player_inventories[player_id-1][item] + quantity)
 	if nm.is_network_game:
 		rset("player_inventories", player_inventories)
-		nm.send_refresh_inventory(player_id)
 	
 	emit_signal("player_inventory_updated", player_id)
 	
@@ -205,6 +204,11 @@ func get_item_count(player_id, item):
 	
 func has_item(player_id, item):
 	return get_item_count(player_id, item) > 0
+	
+func set_player_inventories(value):
+	player_inventories = value
+	for i in range(1, 5):
+		emit_signal("player_inventory_updated", i)
 
 ###################################
 ############## SCORE ##############
@@ -215,6 +219,10 @@ func grant_score(player_id, score = 1):
 	player_scores[player_id-1] += score
 	if player_scores[player_id-1] < 0:
 		player_scores[player_id-1] = 0 # We don't allow negative score values!
+		
+	if nm.is_network_game:
+		rset("player_scores", player_scores)
+		
 	emit_signal("player_score_updated", player_id)
 	
 func get_score(player_id):
@@ -223,6 +231,10 @@ func get_score(player_id):
 		
 	return player_scores[player_id-1]
 
+func set_player_scores(value):
+	player_scores = value
+	for i in range(1,5):
+		emit_signal("player_score_updated", i)
 #########################################
 ############## CHEAT CODES ##############
 #########################################
