@@ -148,6 +148,9 @@ func _on_start_pressed():
 	get_tree().change_scene(levels[current_level_index]["path"])
 
 func _on_back_pressed():
+	if nm.is_network_game and nm.is_client:
+		#get_tree().network_peer.free()
+		get_tree().network_peer = null
 	get_tree().change_scene("res://Scripts/UI/MainMenu.tscn")
 	
 func add_player(input, player_id = -1):
