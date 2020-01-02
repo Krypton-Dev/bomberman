@@ -53,7 +53,7 @@ func _player_disconnected(id):
 func _player_connected(id):
 	for i in range(0, 4):
 		if player_id_peers[i] != id and player_id_peers[i] != -1:
-			rpc_id(id, "add_player", i)
+			rpc_id(id, "add_player", i+1, player_id_peers[i])
 	
 func enable_server():
 	is_network_game = true
@@ -75,10 +75,10 @@ func get_peer_of_player(player_id):
 	
 func send_add_player(player_id):
 	player_id_peers[player_id-1] = get_tree().get_network_unique_id()
-	rpc("add_player", player_id)
+	rpc("add_player", player_id, get_tree().get_network_unique_id())
 	
-remote func add_player(player_id):
-	player_id_peers[player_id-1] = get_tree().get_rpc_sender_id()
+remote func add_player(player_id, peer_id):
+	player_id_peers[player_id-1] = peer_id
 	emit_signal("player_joined", player_id)
 	
 func send_set_level(level_id):
