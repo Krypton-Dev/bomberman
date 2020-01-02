@@ -17,7 +17,6 @@ func sort_positions(pos_a, pos_b):
 	return false
 
 func explode():	
-		
 	hide()
 		
 	exploded = true
@@ -30,7 +29,7 @@ func explode():
 	rel_positions.sort_custom(self, "sort_positions")
 	
 	for rel_pos in rel_positions:
-		if explodeIfSpace(rel_pos) != ExplosionStatus.STOP:
+		if explode_if_space(rel_pos) != ExplosionStatus.STOP:
 			yield(get_tree().create_timer(0.01), "timeout")
 	
 	queue_free()
