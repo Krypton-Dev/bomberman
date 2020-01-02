@@ -109,10 +109,10 @@ remotesync func spawn_player(player_id, position):
 		
 func respawn_player(player_id):
 	var location = get_randomized_spawn_positions().pop_back()
-	var playerInstance = player.instance()
-	playerInstance.position = location
-	playerInstance.player_id = player_id
-	current_scene.add_child(playerInstance)
+	if nm.is_network_game:
+		rpc("spawn_player", player_id, location)
+	else:
+		spawn_player(player_id, location)
 	clear_inventory(player_id)
 
 func spawn_item(position:Vector2, item_type:String):
@@ -164,7 +164,9 @@ func clear_inventory(player_id):
 		bomb = 3,
 		nuke = 0
 	}
-	rset("player_inventories", player_inventories)
+	if nm.is_network_game:
+		rset("player_inventories", player_inventories)
+		nm.send_refresh_inventory(player_id)
 	
 	emit_signal("player_inventory_updated", player_id)
 	
@@ -180,8 +182,9 @@ func check_free_space(player_id, item):
 func give_item(player_id, item, quantity = 1):
 	assert(player_id >= 1 && player_id <= 4)
 	player_inventories[player_id-1][item] = _ensure_storage(item, player_inventories[player_id-1][item] + quantity)
-	rset("player_inventories", player_inventories)
-	nm.send_refresh_inventory(player_id)
+	if nm.is_network_game:
+		rset("player_inventories", player_inventories)
+		nm.send_refresh_inventory(player_id)
 	
 	emit_signal("player_inventory_updated", player_id)
 	
