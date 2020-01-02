@@ -1,5 +1,7 @@
 extends Node
 
+onready var nm = $"/root/NetworkManager"
+
 var game_running = false
 
 var player = preload("res://Scripts/Player/PlayerScene.tscn")
@@ -10,8 +12,8 @@ var respawn_time = 2
 var next_item_drop = 0
 
 var active_players = []
-var player_scores = [ 0, 0, 0, 0 ]
-var player_inventories = [
+remote var player_scores = [ 0, 0, 0, 0 ]
+remote var player_inventories = [
 	null, null, null, null
 ]
 var propabilities = {
@@ -33,9 +35,10 @@ func _process(delta):
 	if not game_running:
 		return
 	
-	next_item_drop -= delta
-	if next_item_drop <= 0:
-		spawn_random_item()
+	if not nm.is_network_game or nm.is_server:
+		next_item_drop -= delta
+		if next_item_drop <= 0:
+			spawn_random_item()
 		
 func start_game():
 	game_running = true
@@ -43,10 +46,11 @@ func start_game():
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() - 1)
 	
-	clear_inventories()
-	spawn_players()	
-	
-	spawn_random_item()
+	if not nm.is_network_game or nm.is_server:
+		clear_inventories()
+		spawn_players()	
+		
+		spawn_random_item()
 	
 #####################################
 ############## PLAYERS ##############
@@ -87,10 +91,21 @@ func get_randomized_spawn_positions():
 func spawn_players():		
 	var locations = get_randomized_spawn_positions()
 	for player_id in range(1, active_players.size() + 1):
-		var playerInstance = player.instance()
-		playerInstance.position = locations.pop_back()
-		playerInstance.player_id = player_id
-		current_scene.add_child(playerInstance)
+		var pos = locations.pop_back()
+		if nm.is_network_game:
+			rpc("spawn_player", player_id, pos)
+		else:
+			spawn_player(player_id, pos)
+		
+remotesync func spawn_player(player_id, position):
+	var playerInstance = player.instance()
+	playerInstance.position = position
+	playerInstance.player_id = player_id
+	
+	if nm.is_network_game:
+		playerInstance.set_network_master(nm.get_peer_of_player(player_id))
+	
+	current_scene.add_child(playerInstance)
 		
 func respawn_player(player_id):
 	var location = get_randomized_spawn_positions().pop_back()
@@ -149,6 +164,7 @@ func clear_inventory(player_id):
 		bomb = 3,
 		nuke = 0
 	}
+	rset("player_inventories", player_inventories)
 	
 	emit_signal("player_inventory_updated", player_id)
 	
@@ -164,6 +180,8 @@ func check_free_space(player_id, item):
 func give_item(player_id, item, quantity = 1):
 	assert(player_id >= 1 && player_id <= 4)
 	player_inventories[player_id-1][item] = _ensure_storage(item, player_inventories[player_id-1][item] + quantity)
+	rset("player_inventories", player_inventories)
+	nm.send_refresh_inventory(player_id)
 	
 	emit_signal("player_inventory_updated", player_id)
 	

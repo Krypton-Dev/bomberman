@@ -10,6 +10,8 @@ signal player_left
 signal server_joined
 signal server_disconnect
 signal change_level
+signal start_game
+signal refresh_inventory
 
 var player_id_peers = [-1,-1,-1,-1]
 
@@ -65,6 +67,12 @@ func enable_client():
 	is_client = true
 	connected = false
 	
+func close_server():
+	get_tree().set_refuse_new_network_connections(true)
+	
+func get_peer_of_player(player_id):
+	return player_id_peers[player_id-1]
+	
 func send_add_player(player_id):
 	player_id_peers[player_id-1] = get_tree().get_network_unique_id()
 	rpc("add_player", player_id)
@@ -78,3 +86,15 @@ func send_set_level(level_id):
 	
 remote func set_level(level_id):
 	emit_signal("change_level", level_id)
+
+func send_start_game():
+	rpc("start_game")
+	
+remote func start_game():
+	emit_signal("start_game")
+
+func send_refresh_inventory(player_id):
+	rpc("refresh_inventory", player_id)
+	
+remote func refresh_inventory(player_id):
+	emit_signal("refresh_inventory", player_id)

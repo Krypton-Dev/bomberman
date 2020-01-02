@@ -56,6 +56,7 @@ func _ready():
 		nm.connect("server_joined", self, "_on_joined")
 		nm.connect("server_disconnect", self, "_on_leave")
 		nm.connect("change_level", self, "_on_change_level")
+		nm.connect("start_game", self, "_on_start_game")
 		
 		if nm.is_server:
 			network_label.text = "Hosting server"
@@ -80,6 +81,9 @@ func _on_change_level(level_id):
 	current_level_index = level_id
 	print("change level to ", level_id)
 	show_level(levels[current_level_index])
+	
+func _on_start_game():
+	start_game()
 	
 func _process(delta):
 	if Input.is_action_just_pressed("player1_fire"):
@@ -144,14 +148,19 @@ func _on_prev_pressed():
 			show_level(levels[current_level_index])
 
 func _on_start_pressed():
-	var gm = get_node("/root/GameManager")
-	get_tree().change_scene(levels[current_level_index]["path"])
+	if not nm.is_network_game or nm.is_server:
+		nm.close_server()
+		nm.send_start_game()
+		gm.set_network_master(1)
+		start_game()
 
 func _on_back_pressed():
 	if nm.is_network_game and nm.is_client:
-		#get_tree().network_peer.free()
 		get_tree().network_peer = null
 	get_tree().change_scene("res://Scripts/UI/MainMenu.tscn")
+	
+func start_game():
+	get_tree().change_scene(levels[current_level_index]["path"])
 	
 func add_player(input, player_id = -1):
 	if player_count >= 4:
