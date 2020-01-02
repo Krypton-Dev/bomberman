@@ -6,6 +6,7 @@ var is_client = false
 var connected = false
 
 signal player_joined
+signal player_left
 signal server_joined
 signal server_disconnect
 signal change_level
@@ -13,6 +14,8 @@ signal change_level
 var player_id_peers = [-1,-1,-1,-1]
 
 func _ready():
+	get_tree().connect("network_peer_connected", self, "_player_connected")
+	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	get_tree().connect("connected_to_server", self, "_connected_ok")
 	get_tree().connect("connection_failed", self, "_connection_failed")
 	get_tree().connect("server_disconnected", self, "_connection_closed")
@@ -28,6 +31,27 @@ func _connection_failed():
 func _connection_closed():
 	connected = false
 	emit_signal("server_disconnect")
+	
+func _player_disconnected(id):
+	print(id, " disconnected")
+	var remove_positions = []
+	for i in range(0, 4):
+		if player_id_peers[i] == id:
+			player_id_peers[i] = -1
+			remove_positions.push_back(i)
+			emit_signal("player_left", i+1)
+			
+	for i in remove_positions:
+		player_id_peers.remove(i)
+		
+	if player_id_peers.size() < 4:
+		for i in range(player_id_peers.size(), 4):
+			player_id_peers.push_back(-1)
+			
+func _player_connected(id):
+	for i in range(0, 4):
+		if player_id_peers[i] != id and player_id_peers[i] != -1:
+			rpc_id(id, "add_player", i)
 	
 func enable_server():
 	is_network_game = true

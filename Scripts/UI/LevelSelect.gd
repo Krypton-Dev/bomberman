@@ -52,6 +52,7 @@ func _ready():
 	
 	if nm.is_network_game:
 		nm.connect("player_joined", self, "_on_player_joined")
+		nm.connect("player_left", self, "_on_player_left")
 		nm.connect("server_joined", self, "_on_joined")
 		nm.connect("server_disconnect", self, "_on_leave")
 		nm.connect("change_level", self, "_on_change_level")
@@ -64,7 +65,10 @@ func _ready():
 		network_label.text = "Local game"
 		
 func _on_player_joined(player_id):
-	add_player("network")
+	add_player("network", player_id)
+	
+func _on_player_left(player_id):
+	remove_player(player_id)
 	
 func _on_joined():
 	network_label.text = "Server joined"
@@ -146,7 +150,7 @@ func _on_start_pressed():
 func _on_back_pressed():
 	get_tree().change_scene("res://Scripts/UI/MainMenu.tscn")
 	
-func add_player(input):
+func add_player(input, player_id = -1):
 	if player_count >= 4:
 		return
 	
@@ -158,6 +162,23 @@ func add_player(input):
 	player_count = player_count + 1
 	
 	gm.add_player(input)
+	
+	update_player_display()
+	
+func remove_player(player_id):
+	players[player_id-1].input_method = null
+	player_count -= 1
+	
+	# Move players up if needed
+	var reassign = []
+	for i in range(player_id, 4):
+		if players[i].input_method != null:
+			reassign.push_back(players[i].input_method)
+			players[i].input_method = null
+	
+	if not reassign.empty():
+		for i in range(player_id-1, player_id - 1 + reassign.size()):
+			players[i].input_method = reassign.pop_front()
 	
 	update_player_display()
 	
