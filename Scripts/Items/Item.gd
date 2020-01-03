@@ -27,6 +27,7 @@ func _process(delta):
 		time_expired += delta
 		if time_expired >= lifetime:
 			rpc("remove")
+			remove()
 
 func _ready():
 	var path = "res://Assets/Items/item_" + get_enum_string(item_type) + ".png"
@@ -55,6 +56,7 @@ func on_item_collect(body):
 		if gm.check_free_space(body.player_id, item):
 			gm.give_item(body.player_id, item)
 			rpc("remove")
+			remove()
 
-remotesync func remove():
+remote func remove():
 	queue_free()
