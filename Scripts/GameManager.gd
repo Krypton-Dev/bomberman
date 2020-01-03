@@ -2,6 +2,9 @@ extends Node
 
 onready var nm = $"/root/NetworkManager"
 
+var bomb = preload("res://Scripts/Bombs/Bomb.tscn")
+var nuke = preload("res://Scripts/Bombs/Nuke.tscn")
+
 var game_running = false
 
 var player = preload("res://Scripts/Player/PlayerScene.tscn")
@@ -159,6 +162,24 @@ func get_map_tiles(collision_layer = 0):
 			valid_spaces.push_back(abs_pos)
 			
 	return valid_spaces
+	
+remote func spawn(type, player_id, position):
+	var instance = null
+	if type == "nuke":
+		instance = nuke.instance()
+		pass
+	elif type == "bomb":
+		instance = bomb.instance()
+		pass
+	else:
+		return
+		
+	instance.player_id = player_id
+	instance.position = position
+	current_scene.add_child(instance)
+	
+	if nm.is_network_game and nm.get_peer_of_player(player_id) == get_tree().get_network_unique_id():
+		rpc("spawn", type, player_id, position)
 
 #######################################
 ############## INVENTORY ##############
@@ -278,6 +299,9 @@ func getColor(player_id):
 	return "Green"
 
 func on_destoryable_destroyed(destroyable, player_id):
+	if nm.is_network_game and nm.is_client:
+		return
+	
 	if not propabilities.has(destroyable.type):
 		return
 	var props = propabilities[destroyable.type]

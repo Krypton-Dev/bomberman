@@ -20,8 +20,6 @@ puppet var server_position = null
 
 var controller_state = {}
 
-var bomb = preload("res://Scripts/Bombs/Bomb.tscn")
-var nuke = preload("res://Scripts/Bombs/Nuke.tscn")
 var death_animation = preload("res://Scripts/Player/death_animation.tscn")
 
 func _ready():
@@ -115,20 +113,12 @@ func check_action(action, just = false):
 
 func fire():
 	if gm.has_item(player_id, "nuke"):
-		var newNuke = nuke.instance()
-		newNuke.player_id = player_id
-		newNuke.position = (position / 128).floor() * 128 + Vector2(64,64)
-		get_parent().add_child(newNuke)
-		
+		gm.spawn("nuke", player_id, (position / 128).floor() * 128 + Vector2(64,64))
 		gm.remove_item(player_id, "nuke")
 		return
 	
 	if gm.has_item(player_id, "bomb"):
-		var newBomb = bomb.instance()
-		newBomb.player_id = player_id
-		newBomb.position = (position / 128).floor() * 128 + Vector2(64,64)
-		get_parent().add_child(newBomb)
-		
+		gm.spawn("bomb", player_id, (position / 128).floor() * 128 + Vector2(64,64))		
 		gm.remove_item(player_id, "bomb")
 		return
 
