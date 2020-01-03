@@ -9,6 +9,8 @@ var item = preload("res://Scripts/Items/Item.tscn")
 var current_scene = null
 var respawn_time = 2
 
+var item_id = 0
+
 var next_item_drop = 0
 
 var active_players = []
@@ -116,11 +118,17 @@ func respawn_player(player_id):
 		spawn_player(player_id, location)
 	clear_inventory(player_id)
 
-func spawn_item(position:Vector2, item_type:String):
+puppet func spawn_item(position:Vector2, item_type:String):
 	var item_instance = item.instance()
+	item_instance.name = "item" + str(item_id)
 	item_instance.position = position
 	item_instance.set_item_type(item_type)
 	current_scene.add_child(item_instance)
+	
+	item_id += 1
+	
+	if nm.is_network_game and nm.is_server:
+		rpc("spawn_item", position, item_type)
 
 func spawn_random_item():
 	next_item_drop = rand_range(3, 5)
