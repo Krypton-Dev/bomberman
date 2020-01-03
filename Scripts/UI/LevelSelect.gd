@@ -244,7 +244,7 @@ func get_input_icon(input_method: String):
 		var input_device_id = int(input_method.trim_prefix("controller"))
 		return "Assets/UI/controller" + str(input_device_id+1) + ".png"
 	if input_method.begins_with("network"):
-		return "Assets/UI/keyboard1.png" #todo
+		return "Assets/UI/WIFI.png" #todo
 
 func _on_connected():
 	network_label.text = "Server joined"
