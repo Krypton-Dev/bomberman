@@ -30,6 +30,8 @@ func _ready():
 	gm = get_node("/root/GameManager")
 	
 func _process(delta):	
+	name = "player@" + str(player_id)
+	
 	spawn_delay_elapsed += delta
 	if not spawned and spawn_delay_elapsed >= spawn_delay:
 		spawned = true
@@ -128,13 +130,15 @@ func damage(player_id):
 		return
 		
 	dead = true
-	if player_id != self.player_id:
-		gm.grant_score(player_id)
-	else:
-		gm.grant_score(player_id, -1)
+	if not nm.is_network_game or nm.is_server:
+		if player_id != self.player_id:
+			gm.grant_score(player_id)
+		else:
+			gm.grant_score(player_id, -1)
 	
 	queue_free()
-	GameManager.respawn_player(self.player_id)
+	if not nm.is_network_game or nm.is_server:
+		gm.respawn_player(self.player_id)
 	
 	var animation_instance = death_animation.instance()
 	animation_instance.player_id = self.player_id
