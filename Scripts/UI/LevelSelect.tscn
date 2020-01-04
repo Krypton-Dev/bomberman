@@ -12,13 +12,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
-
-[node name="Back" type="Button" parent="."]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 94.0
-margin_bottom = 54.0
-text = "Back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 anchor_right = 1.0
@@ -32,7 +28,6 @@ margin_bottom = 686.0
 custom_constants/separation = 20
 
 [node name="LevelSelector" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
-editor/display_folded = true
 margin_right = 360.0
 margin_bottom = 44.0
 custom_constants/separation = 30
@@ -164,7 +159,38 @@ margin_top = 560.0
 margin_right = 360.0
 margin_bottom = 604.0
 text = "Start Game"
-[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
+
+[node name="Back" type="Button" parent="."]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 94.0
+margin_bottom = 54.0
+text = "Back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -40.0
+margin_bottom = 40.0
+grow_horizontal = 0
+custom_constants/margin_right = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NetworkLabel" type="Label" parent="MarginContainer"]
+margin_top = 8.0
+margin_right = 35.0
+margin_bottom = 32.0
+grow_horizontal = 0
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="CenterContainer/VBoxContainer/LevelSelector/Prev" to="." method="_on_prev_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/LevelSelector/Next" to="." method="_on_next_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Start Game" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]

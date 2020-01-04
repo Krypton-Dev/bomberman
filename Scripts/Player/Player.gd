@@ -3,6 +3,7 @@ extends KinematicBody2D
 class_name Player
 
 onready var sprite = $AnimatedSprite
+onready var nm = $"/root/NetworkManager"
 
 export var speed = 250
 export var player_id = 1
@@ -15,19 +16,22 @@ var spawn_delay_elapsed = 0
 var dead = false
 var gm = null
 
+puppet var server_position = null
+
 var controller_state = {}
 
-var bomb = preload("res://Scripts/Bombs/Bomb.tscn")
-var nuke = preload("res://Scripts/Bombs/Nuke.tscn")
 var death_animation = preload("res://Scripts/Player/death_animation.tscn")
 
 func _ready():
 	visible = false
 	sprite.frames = load("res://Assets/Player/" + GameManager.getColor(player_id) + "/Animation.tres")
+	name = "player@" + str(player_id)
 	
 	gm = get_node("/root/GameManager")
 	
 func _process(delta):	
+	name = "player@" + str(player_id)
+	
 	spawn_delay_elapsed += delta
 	if not spawned and spawn_delay_elapsed >= spawn_delay:
 		spawned = true
@@ -111,20 +115,12 @@ func check_action(action, just = false):
 
 func fire():
 	if gm.has_item(player_id, "nuke"):
-		var newNuke = nuke.instance()
-		newNuke.player_id = player_id
-		newNuke.position = (position / 128).floor() * 128 + Vector2(64,64)
-		get_parent().add_child(newNuke)
-		
+		gm.spawn("nuke", player_id, (position / 128).floor() * 128 + Vector2(64,64))
 		gm.remove_item(player_id, "nuke")
 		return
 	
 	if gm.has_item(player_id, "bomb"):
-		var newBomb = bomb.instance()
-		newBomb.player_id = player_id
-		newBomb.position = (position / 128).floor() * 128 + Vector2(64,64)
-		get_parent().add_child(newBomb)
-		
+		gm.spawn("bomb", player_id, (position / 128).floor() * 128 + Vector2(64,64))		
 		gm.remove_item(player_id, "bomb")
 		return
 
@@ -134,13 +130,15 @@ func damage(player_id):
 		return
 		
 	dead = true
-	if player_id != self.player_id:
-		gm.grant_score(player_id)
-	else:
-		gm.grant_score(player_id, -1)
+	if not nm.is_network_game or nm.is_server:
+		if player_id != self.player_id:
+			gm.grant_score(player_id)
+		else:
+			gm.grant_score(player_id, -1)
 	
 	queue_free()
-	GameManager.respawn_player(self.player_id)
+	if not nm.is_network_game or nm.is_server:
+		gm.respawn_player(self.player_id)
 	
 	var animation_instance = death_animation.instance()
 	animation_instance.player_id = self.player_id
@@ -150,6 +148,13 @@ func damage(player_id):
 func _physics_process(delta):
 	if not spawned:
 		return
+		
+	if nm.is_network_game:
+		if get_network_master() != get_tree().get_network_unique_id():
+			if server_position != null:
+				position = server_position
+				server_position = null
+			return
 		
 	var dir = Vector2()
 	if check_action("down"):
@@ -172,3 +177,5 @@ func _physics_process(delta):
 	dir = dir.normalized()
 		
 	move_and_slide(dir * speed)
+	if nm.is_network_game:
+		rset("server_position", position)

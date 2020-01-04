@@ -7,6 +7,7 @@ export var player_id = -1
 
 var icons = []
 var gm = null
+onready var nm = $"/root/NetworkManager"
 
 func _ready():
 	for icon in get_children():
@@ -15,6 +16,7 @@ func _ready():
 		
 	gm = get_node("/root/GameManager")
 	gm.connect("player_inventory_updated", self, "on_player_inventory_update")
+	nm.connect("refresh_inventory", self, "on_player_inventory_update")
 	
 	on_player_inventory_update(player_id)
 	

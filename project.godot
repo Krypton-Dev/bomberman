@@ -33,6 +33,7 @@ config/icon="res://Assets/logo.png"
 [autoload]
 
 GameManager="*res://Scripts/GameManager.gd"
+NetworkManager="*res://Scripts/NetworkManager.gd"
 
 [display]
 

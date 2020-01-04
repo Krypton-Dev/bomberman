@@ -20,12 +20,14 @@ const free_labels = [
 ]
 
 onready var level_label = $CenterContainer/VBoxContainer/LevelSelector/Label
+onready var network_label = $MarginContainer/NetworkLabel
 onready var viewport = $CenterContainer/VBoxContainer/ViewportContainer/PreviewViewport
 onready var player1 = $CenterContainer/VBoxContainer/Player1
 onready var player2 = $CenterContainer/VBoxContainer/Player2
 onready var player3 = $CenterContainer/VBoxContainer/Player3
 onready var player4 = $CenterContainer/VBoxContainer/Player4
 onready var gm = $"/root/GameManager"
+onready var nm = $"/root/NetworkManager"
 
 var players = null
 
@@ -47,6 +49,41 @@ func _ready():
 	
 	show_level(levels[current_level_index])
 	update_player_display()
+	
+	if nm.is_network_game:
+		nm.connect("player_joined", self, "_on_player_joined")
+		nm.connect("player_left", self, "_on_player_left")
+		nm.connect("server_joined", self, "_on_joined")
+		nm.connect("server_disconnect", self, "_on_leave")
+		nm.connect("change_level", self, "_on_change_level")
+		nm.connect("start_game", self, "_on_start_game")
+		
+		if nm.is_server:
+			network_label.text = "Hosting server"
+		else:
+			network_label.text = "Joining server"
+	else:
+		network_label.text = "Local game"
+		
+func _on_player_joined(player_id):
+	add_player("network", player_id)
+	
+func _on_player_left(player_id):
+	remove_player(player_id)
+	
+func _on_joined():
+	network_label.text = "Server joined"
+	
+func _on_leave():
+	get_tree().change_scene("res://Scripts/UI/JoinServer.tscn")
+	
+func _on_change_level(level_id):
+	current_level_index = level_id
+	print("change level to ", level_id)
+	show_level(levels[current_level_index])
+	
+func _on_start_game():
+	start_game()
 	
 func _process(delta):
 	if Input.is_action_just_pressed("player1_fire"):
@@ -97,31 +134,63 @@ func generate_preview(scenePath: String):
 	viewport.add_child(scene)
 
 func _on_next_pressed():
-	if current_level_index + 1 < levels.size():
-		current_level_index += 1
-		show_level(levels[current_level_index])
+	if not nm.is_network_game or nm.is_server:
+		if current_level_index + 1 < levels.size():
+			current_level_index += 1
+			nm.send_set_level(current_level_index)
+			show_level(levels[current_level_index])
 
 func _on_prev_pressed():
-	if current_level_index - 1 >= 0:
-		current_level_index -= 1
-		show_level(levels[current_level_index])
+	if not nm.is_network_game or nm.is_server:
+		if current_level_index - 1 >= 0:
+			current_level_index -= 1
+			nm.send_set_level(current_level_index)
+			show_level(levels[current_level_index])
 
 func _on_start_pressed():
-	var gm = get_node("/root/GameManager")
-	get_tree().change_scene(levels[current_level_index]["path"])
+	if not nm.is_network_game or nm.is_server:
+		nm.close_server()
+		nm.send_start_game()
+		gm.set_network_master(1)
+		start_game()
 
 func _on_back_pressed():
+	if nm.is_network_game and nm.is_client:
+		get_tree().network_peer = null
 	get_tree().change_scene("res://Scripts/UI/MainMenu.tscn")
 	
-func add_player(input):
+func start_game():
+	get_tree().change_scene(levels[current_level_index]["path"])
+	
+func add_player(input, player_id = -1):
 	if player_count >= 4:
 		return
 	
-	used_input_methods.push_back(input)
+	if input != "network":
+		nm.send_add_player(player_count + 1)
+		used_input_methods.push_back(input)
+		
 	players[player_count].input_method = input
 	player_count = player_count + 1
 	
 	gm.add_player(input)
+	
+	update_player_display()
+	
+func remove_player(player_id):
+	players[player_id-1].input_method = null
+	player_count -= 1
+	
+	# Move players up if needed
+	var reassign = []
+	for i in range(player_id, 4):
+		if players[i].input_method != null:
+			reassign.push_back(players[i].input_method)
+			players[i].input_method = null
+	
+	if not reassign.empty():
+		for i in range(player_id-1, player_id - 1 + reassign.size()):
+			players[i].input_method = reassign.pop_front()
 	
 	update_player_display()
 	
@@ -174,3 +243,8 @@ func get_input_icon(input_method: String):
 	if input_method.begins_with("controller"):
 		var input_device_id = int(input_method.trim_prefix("controller"))
 		return "Assets/UI/controller" + str(input_device_id+1) + ".png"
+	if input_method.begins_with("network"):
+		return "Assets/UI/WIFI.png" #todo
+
+func _on_connected():
+	network_label.text = "Server joined"

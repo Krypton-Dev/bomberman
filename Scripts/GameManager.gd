@@ -1,5 +1,10 @@
 extends Node
 
+onready var nm = $"/root/NetworkManager"
+
+var bomb = preload("res://Scripts/Bombs/Bomb.tscn")
+var nuke = preload("res://Scripts/Bombs/Nuke.tscn")
+
 var game_running = false
 
 var player = preload("res://Scripts/Player/PlayerScene.tscn")
@@ -7,13 +12,16 @@ var item = preload("res://Scripts/Items/Item.tscn")
 var current_scene = null
 var respawn_time = 2
 
+var item_id = 0
+
 var next_item_drop = 0
 
 var active_players = []
-var player_scores = [ 0, 0, 0, 0 ]
-var player_inventories = [
+remote var player_scores = [ 0, 0, 0, 0 ] setget set_player_scores
+remote var player_inventories = [
 	null, null, null, null
-]
+] setget set_player_inventories
+
 var propabilities = {
 	0: {
 		bomb=0.333
@@ -33,9 +41,10 @@ func _process(delta):
 	if not game_running:
 		return
 	
-	next_item_drop -= delta
-	if next_item_drop <= 0:
-		spawn_random_item()
+	if not nm.is_network_game or nm.is_server:
+		next_item_drop -= delta
+		if next_item_drop <= 0:
+			spawn_random_item()
 		
 func start_game():
 	game_running = true
@@ -43,10 +52,11 @@ func start_game():
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() - 1)
 	
-	clear_inventories()
-	spawn_players()	
-	
-	spawn_random_item()
+	if not nm.is_network_game or nm.is_server:
+		clear_inventories()
+		spawn_players()	
+		
+		spawn_random_item()
 	
 #####################################
 ############## PLAYERS ##############
@@ -87,24 +97,41 @@ func get_randomized_spawn_positions():
 func spawn_players():		
 	var locations = get_randomized_spawn_positions()
 	for player_id in range(1, active_players.size() + 1):
-		var playerInstance = player.instance()
-		playerInstance.position = locations.pop_back()
-		playerInstance.player_id = player_id
-		current_scene.add_child(playerInstance)
+		var pos = locations.pop_back()
+		if nm.is_network_game:
+			rpc("spawn_player", player_id, pos)
+		else:
+			spawn_player(player_id, pos)
+		
+remotesync func spawn_player(player_id, position):
+	var playerInstance = player.instance()
+	playerInstance.position = position
+	playerInstance.player_id = player_id
+	
+	if nm.is_network_game:
+		playerInstance.set_network_master(nm.get_peer_of_player(player_id))
+	
+	current_scene.add_child(playerInstance)
 		
 func respawn_player(player_id):
 	var location = get_randomized_spawn_positions().pop_back()
-	var playerInstance = player.instance()
-	playerInstance.position = location
-	playerInstance.player_id = player_id
-	current_scene.add_child(playerInstance)
+	if nm.is_network_game:
+		rpc("spawn_player", player_id, location)
+	else:
+		spawn_player(player_id, location)
 	clear_inventory(player_id)
 
-func spawn_item(position:Vector2, item_type:String):
+puppet func spawn_item(position:Vector2, item_type:String):
 	var item_instance = item.instance()
+	item_instance.name = "item" + str(item_id)
 	item_instance.position = position
 	item_instance.set_item_type(item_type)
 	current_scene.add_child(item_instance)
+	
+	item_id += 1
+	
+	if nm.is_network_game and nm.is_server:
+		rpc("spawn_item", position, item_type)
 
 func spawn_random_item():
 	next_item_drop = rand_range(3, 5)
@@ -135,6 +162,24 @@ func get_map_tiles(collision_layer = 0):
 			valid_spaces.push_back(abs_pos)
 			
 	return valid_spaces
+	
+remote func spawn(type, player_id, position):
+	var instance = null
+	if type == "nuke":
+		instance = nuke.instance()
+		pass
+	elif type == "bomb":
+		instance = bomb.instance()
+		pass
+	else:
+		return
+		
+	instance.player_id = player_id
+	instance.position = position
+	current_scene.add_child(instance)
+	
+	if nm.is_network_game and nm.get_peer_of_player(player_id) == get_tree().get_network_unique_id():
+		rpc("spawn", type, player_id, position)
 
 #######################################
 ############## INVENTORY ##############
@@ -149,6 +194,8 @@ func clear_inventory(player_id):
 		bomb = 3,
 		nuke = 0
 	}
+	if nm.is_network_game:
+		rset("player_inventories", player_inventories)
 	
 	emit_signal("player_inventory_updated", player_id)
 	
@@ -164,6 +211,8 @@ func check_free_space(player_id, item):
 func give_item(player_id, item, quantity = 1):
 	assert(player_id >= 1 && player_id <= 4)
 	player_inventories[player_id-1][item] = _ensure_storage(item, player_inventories[player_id-1][item] + quantity)
+	if nm.is_network_game:
+		rset("player_inventories", player_inventories)
 	
 	emit_signal("player_inventory_updated", player_id)
 	
@@ -184,6 +233,11 @@ func get_item_count(player_id, item):
 	
 func has_item(player_id, item):
 	return get_item_count(player_id, item) > 0
+	
+func set_player_inventories(value):
+	player_inventories = value
+	for i in range(1, 5):
+		emit_signal("player_inventory_updated", i)
 
 ###################################
 ############## SCORE ##############
@@ -194,6 +248,10 @@ func grant_score(player_id, score = 1):
 	player_scores[player_id-1] += score
 	if player_scores[player_id-1] < 0:
 		player_scores[player_id-1] = 0 # We don't allow negative score values!
+		
+	if nm.is_network_game:
+		rset("player_scores", player_scores)
+		
 	emit_signal("player_score_updated", player_id)
 	
 func get_score(player_id):
@@ -202,6 +260,10 @@ func get_score(player_id):
 		
 	return player_scores[player_id-1]
 
+func set_player_scores(value):
+	player_scores = value
+	for i in range(1,5):
+		emit_signal("player_score_updated", i)
 #########################################
 ############## CHEAT CODES ##############
 #########################################
@@ -237,6 +299,9 @@ func getColor(player_id):
 	return "Green"
 
 func on_destoryable_destroyed(destroyable, player_id):
+	if nm.is_network_game and nm.is_client:
+		return
+	
 	if not propabilities.has(destroyable.type):
 		return
 	var props = propabilities[destroyable.type]

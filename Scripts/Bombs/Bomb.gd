@@ -36,24 +36,24 @@ func explode():
 	hide()
 	var directions = {left = true, right = true, up = true, down = true}
 	
-	if explodeIfSpace(Vector2(0, 0)) & 4 == 4:
+	if explode_if_space(Vector2(0, 0)) & 4 == 4:
 		queue_free()
-		return # should never happen but bomb likes like to be in a wall or so
+		return # should never happen but it looks like that the bomb is in a wall
 		
 	yield(get_tree().create_timer(0.1), "timeout")
 	
 	for offset in range(1, explosion_range):
 		if directions.left:
-			if explodeIfSpace(Vector2(-offset, 0)) & 4 == 4:
+			if explode_if_space(Vector2(-offset, 0)) & 4 == 4:
 				directions.left = false
 		if directions.right:
-			if explodeIfSpace(Vector2(offset, 0)) & 4 == 4:
+			if explode_if_space(Vector2(offset, 0)) & 4 == 4:
 				directions.right = false
 		if directions.up:
-			if explodeIfSpace(Vector2(0, -offset)) & 4 == 4:
+			if explode_if_space(Vector2(0, -offset)) & 4 == 4:
 				directions.up = false
 		if directions.down:
-			if explodeIfSpace(Vector2(0, offset)) & 4 == 4:
+			if explode_if_space(Vector2(0, offset)) & 4 == 4:
 				directions.down = false
 		yield(get_tree().create_timer(0.1), "timeout")
 			
@@ -72,7 +72,7 @@ enum ExplosionStatus {
 	HIT					= 2 | 4,
 }
 	
-func explodeIfSpace(rel_pos):
+func explode_if_space(rel_pos):
 	var new_pos = position + rel_pos * grid_size
 	# check for static walls
 	var collisionLayerBorders = 1	
