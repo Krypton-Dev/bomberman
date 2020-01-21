@@ -86,7 +86,7 @@ margin_left = 5.0
 margin_top = -10.0
 margin_right = 273.0
 custom_fonts/font = SubResource( 2 )
-text = "by Jonas Bernemann and Max Huster. Assets by Kenney"
+text = "by KryptonDev & contributors. Assets by Kenney"
 [connection signal="pressed" from="VBoxContainer/Local Multiplayer" to="." method="_on_local_pressed"]
 [connection signal="pressed" from="VBoxContainer/Network Multiplayer" to="." method="_on_network_pressed"]
 [connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_exit_pressed"]
